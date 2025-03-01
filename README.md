@@ -1,75 +1,48 @@
-# Nuxt Minimal Starter
+<h1 align="center" id="title">Computer Based Test</h1>
+
+
+<p id="description">This repository is the Frontend part of Computer Based Test which is made using Nuxt 3.</p>
+
+
+<h2>🧐 Features</h2>
+
+Here're some of the project's best features:
+
+- Paper saving
+
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone Repository</p>
+
+```
+git clone https://github.com/DevacctoRPL/Frontend-Computer-Based-Test.git
+```
+
+<p>2. Install dependencies</p>
+
+```
+npm install
+```
+
+<p>3. Run Development server</p>
+
+```
+npm run dev
+```
+
+
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+- Nuxt 3
+- Vue 3
+- Typescripts
+- Tailwind CSS
+- Nuxt UI
+
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
