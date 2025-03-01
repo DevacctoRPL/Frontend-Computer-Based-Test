@@ -16,5 +16,10 @@
     "tailwindcss": "^4.0.9",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "overrides": {
+    "vite": {
+      "esbuild": "^0.25.0"
+    }
   }
 }
