@@ -1,14 +1,12 @@
 {
-  "tailwindCSS.experimental.classRegex": [
-    ["ui:\\s*{([^)]*)\\s*}", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["/\\*\\s?ui\\s?\\*/\\s*{([^;]*)}", ":\\s*[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
   "files.associations": {
     "*.css": "tailwindcss"
   },
   "editor.quickSuggestions": {
-    "strings": true
+    "strings": "on"
   },
-  "tailwindCSS.experimental.configFile": "tailwind.config.ts",
-  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "ui"]
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.experimental.classRegex": [
+    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }
