@@ -1,13 +1,13 @@
 <template>
   <div>
-    <UButton >Test Button</UButton>
+    
   </div>
 </template>
 
 <script lang="ts" setup>
-
+definePageMeta({
+  middleware: ["auth"],
+});
 </script>
 
-<style>
-
-</style>
+<style></style>

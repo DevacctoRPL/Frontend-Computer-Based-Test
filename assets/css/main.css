@@ -1,9 +1,17 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @import "@nuxt/ui";
 
 @theme {
-    --color-primary-dark: #0E0E0E;
-    --color-secondary-dark: #1E1E1E;
-    --color-tertiary-dark: #1B1B1B;
-    --color-primary-light: #E1E1E1;
+  --color-primary-dark: #0e0e0e;
+  --color-secondary-dark: #1e1e1e;
+  --color-tertiary-dark: #1b1b1b;
+  --color-primary-light: #e1e1e1;
+}
+
+@layer base {
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--color-primary-dark);
+    color: var(--color-primary-light);
+  }
 }

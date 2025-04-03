@@ -28,7 +28,7 @@ npm install
 <p>3. Run Development server</p>
 
 ```
-npm run dev
+npx nuxi dev --host=127.0.0.1 //For better load time, according to some sources but not for me -Adit
 ```
 
 

@@ -3,39 +3,65 @@
     class="flex justify-center items-center h-screen text-primary-light bg-gradient-to-b from-tertiary-dark to-primary-dark"
   >
     <UCard class="w-96 bg-primary-dark/15 ring-primary-light/30">
-      <UForm :state="state" @submit="">
-        <h1 class="text-4xl font-bold text-center mb-5">Masuk</h1>
+      <UForm :state="state" @submit.prevent="Login(state)">
+        <div class="mb-5">
+          <img
+            src="~/assets/images/Logo SMK Plus Pelita Nusantara.webp"
+            alt="Logo"
+            class="w-14 mx-auto"
+          />
+          <h1 class="text-3xl font-bold text-center">Masuk</h1>
+          <span class="text-center"
+            >Masukan kredensial untuk masuk ke akun anda</span
+          >
+        </div>
         <UFormField required label="Nama Pengguna" size="xl">
           <UInput
             required
+            v-model="state.username"
             placeholder="Masukan Nama Pengguna"
             type="text"
             :ui="{
-              base: 'w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
+              base: 'transition-all w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
             }"
-            class="w-full mb-2.5"
+            class="w-full mb-2"
           />
         </UFormField>
 
         <UFormField required label="Email" size="xl">
           <UInput
             required
+            v-model="state.email"
             placeholder="Masukan Email"
             type="email"
             :ui="{
-              base: 'w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
+              base: 'transition-all w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
             }"
-            class="w-full mb-2.5"
+            class="w-full mb-2"
           />
         </UFormField>
 
         <UFormField required label="Kata Sandi" size="xl">
           <UInput
             required
+            v-model="state.password"
             placeholder="Masukan Kata Sandi"
             type="password"
             :ui="{
-              base: 'w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
+              base: 'transition-all w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
+            }"
+            class="w-full mb-2"
+          />
+        </UFormField>
+
+        <UFormField required label="Kata Sandi" size="xl">
+          <UInput
+            required
+            v-model="state.c_password"
+            placeholder="Masukan Kata Sandi lagi"
+            type="password"
+            :ui="{
+              base: 'transition-all w-full mb-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
             }"
             class="w-full mb-10"
           />
@@ -54,6 +80,8 @@
 </template>
 
 <script lang="ts" setup>
+const { Login } = useAuth();
+
 definePageMeta({
   path: "/login",
 });
@@ -64,6 +92,7 @@ const state = ref({
   password: "",
   c_password: "",
 });
+
 </script>
 
 <style></style>
