@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "fe-cbt",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,6 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
     "tailwindcss": "^4.1.1",
     "vue": "latest",
     "vue-router": "latest"
@@ -22,6 +21,7 @@
   },
   "devDependencies": {
     "@nuxt/ui": "^3.0.2",
+    "@types/node": "^22.14.0",
     "nuxt": "^3.16.2"
   }
 }

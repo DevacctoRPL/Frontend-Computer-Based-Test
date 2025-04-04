@@ -1,11 +1,10 @@
-
 export const useAuth = () => {
-const BASE_URL = "https://cbt.synchronizeteams.my.id/api" // gak tau env nya gak bisa di pake jadi gua gini dlu, kalo bisa di ganti pake env
+const BASE_URL = useRuntimeConfig().public.apiBase // gak tau env nya gak bisa di pake jadi gua gini dlu, kalo bisa di ganti pake env
 const { setToken, saveUserData } = useStorage()
 
   const Login = async (data: any) => {
     try {
-      const res = await $fetch(`${BASE_URL}/auth/login`, {
+      const res = await $fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         body: data
       }) as any
