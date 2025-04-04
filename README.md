@@ -22,13 +22,13 @@ git clone https://github.com/DevacctoRPL/Frontend-Computer-Based-Test.git
 <p>2. Install dependencies</p>
 
 ```
-npm install
+pnpm install
 ```
 
 <p>3. Run Development server</p>
 
 ```
-npx nuxi dev --host=127.0.0.1 //For better load time, according to some sources but not for me -Adit
+pnpm run dev --host=127.0.0.1 //For better load time, according to some sources but not for me -Adit
 ```
 
 
