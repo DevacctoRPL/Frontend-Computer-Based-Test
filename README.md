@@ -43,6 +43,7 @@ Technologies used in the project:
 - Nuxt UI
 
 <h2 align="center" >Ruleset:</h2>
+
 - Use kebab-case for file names
 - Use PascalCase for component names
 - Use camelCase for variables and functions
