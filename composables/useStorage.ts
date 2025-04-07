@@ -8,11 +8,11 @@ export const useStorage = () => {
   }
 
   const saveUserData = (userData: any) => {
-    localStorage.setItem('userData', JSON.stringify(userData))
+   window.localStorage.setItem('userData', JSON.stringify(userData))
   }
 
   const getUserData = () => {
-    const userData = localStorage.getItem('userData')
+    const userData = window.localStorage.getItem('userData')
     return userData ? JSON.parse(userData) : null
   } // Gak tau dah bakal kepake apa kaga -Adit
 

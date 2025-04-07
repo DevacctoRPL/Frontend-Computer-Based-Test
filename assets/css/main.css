@@ -6,6 +6,8 @@
   --color-secondary-dark: #1e1e1e;
   --color-tertiary-dark: #1b1b1b;
   --color-primary-light: #e1e1e1;
+
+  --color-answered: #00C16A;
 }
 
 @layer base {
