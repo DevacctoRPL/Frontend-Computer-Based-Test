@@ -1,4 +1,5 @@
 <template>
+  
   <div class="fixed w-full flex justify-between items-center h-16 p-2">
     <img src="~/assets/images/Penus.webp" alt="Logo" class="w-14" />
 
