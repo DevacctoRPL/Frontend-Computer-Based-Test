@@ -5,7 +5,9 @@
     <!-- Sidebar nyaa -->
     <aside class="w-1/5 p-4 border-r border-secondary-dark flex flex-col">
       <div>
-        <div class="grid grid-cols-5 space-x-0.5 space-y-3 transition-all">
+        <div
+          class="grid grid-cols-5 space-x-0.5 space-y-3 transition-all justify-items-center"
+        >
           <!-- Nanti bakal diambil dari api buat is-answered, mungkin. is-active pakai url params -->
           <NumberButton
             v-for="i in 30"
@@ -19,12 +21,11 @@
 
       <!-- Tombol Navigasi -->
       <div class="mt-6 flex items-center justify-between gap-1">
-        <NuxtLink
-          to="#"
+        <UButton
           class="w-24 h-10 cursor-pointer transition-all bg-secondary-dark hover:bg-primary-light/40 text-primary-light rounded flex items-center justify-center"
         >
           <UIcon name="lucide:chevron-left" size="24" />
-        </NuxtLink>
+        </UButton>
 
         <UButton
           variant="outline"
@@ -33,12 +34,11 @@
           <UIcon name="lucide:flag" size="24" />
         </UButton>
 
-        <NuxtLink
-          to="#"
+        <UButton
           class="w-24 h-10 cursor-pointer transition-all bg-secondary-dark hover:bg-primary-light/40 text-primary-light rounded flex items-center justify-center"
         >
           <UIcon name="lucide:chevron-right" size="24" />
-        </NuxtLink>
+        </UButton>
       </div>
     </aside>
 
@@ -58,11 +58,23 @@
           including versions of Lorem Ipsum.
         </p>
 
-        <textarea
-          rows="10"
-          placeholder="Jawaban Anda"
-          class="w-full p-2 mt-4 bg-secondary-dark/50 outline outline-[#2E2E2E] rounded-md"
-        ></textarea>
+        <section id="answer" class="mt-8">
+          <textarea
+            v-if="current > 25"
+            rows="10"
+            placeholder="Jawaban Anda"
+            class="w-full p-2 mt-4 bg-secondary-dark/50 outline outline-[#2E2E2E] rounded-md"
+          ></textarea>
+          <MultipleChoice
+            v-else
+            :items="[
+              'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+              'Ipsum',
+              'Dolor',
+              'Sit',
+            ]"
+          />
+        </section>
 
         <!-- Pencet, Nanti kira-kira gitu hasilnya - Adit -->
         <UButton
@@ -73,7 +85,11 @@
         >
           Selanjutnya →
         </UButton>
-        <UButton v-else icon="lucide:send" class="mt-14 cursor-pointer float-end py-2 px-3 rounded">
+        <UButton
+          v-else
+          icon="lucide:send"
+          class="mt-14 cursor-pointer float-end py-2 px-3 rounded"
+        >
           Selesai
         </UButton>
       </div>
@@ -112,17 +128,15 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
-  path: "/soal",
 });
 
-const answered = ref(0)
-const current = ref(1)
+const answered = ref(0);
+const current = ref(1);
 
 const next = () => {
-  answered.value++
-  current.value++
-}
-
+  answered.value++;
+  current.value++;
+};
 </script>
 
 <style scoped>
