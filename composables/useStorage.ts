@@ -1,20 +1,20 @@
 export const useStorage = () => {
   const setToken = (token: string) => {
-    useCookie('authToken').value = token
-  }
+    useCookie("authToken").value = token;
+  };
 
   const getToken = () => {
-    return useCookie('authToken').value
-  }
+    return useCookie("authToken").value;
+  };
 
   const saveUserData = (userData: any) => {
-   window.localStorage.setItem('userData', JSON.stringify(userData))
-  }
+    useCookie("userData", userData);
+  };
 
   const getUserData = () => {
-    const userData = window.localStorage.getItem('userData')
-    return userData ? JSON.parse(userData) : null
-  } // Gak tau dah bakal kepake apa kaga -Adit
+    const userData = useCookie("userData").value;
+    return userData;
+  };
 
-  return { setToken, getToken, saveUserData, getUserData }
-}
+  return { setToken, getToken, saveUserData, getUserData };
+};
