@@ -9,8 +9,15 @@ export const useTest = () => {
   const token = getToken()
 
   const GetTest = async () => {
-    const response = await $fetch<Test>(`${BASE_URL}/api/guru/tes/show`)
-    return response
+    const response = await $fetch<{data: Test[]}>(`${BASE_URL}/api/guru/tes/show`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    return response.data
   } 
 
   const CreateTest = async (formData : Test) => {

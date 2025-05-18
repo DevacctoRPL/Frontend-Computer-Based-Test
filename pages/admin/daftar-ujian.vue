@@ -5,31 +5,43 @@
       <UButton class="bg-primary-light text-red-600 hover:bg-red-600 hover:text-primary-dark" icon="lucide:trash-2" @click="deleteSoal"></UButton>
     </div>
 
-    <div class="flex justify-between flex-wrap gap-4">
+    <div class="flex flex-wrap gap-4">
       <CardUjian
         v-for="(soal, index) in soalList"
         :key="index"
-        :soal="soal"
+        :soal="{
+          judul: soal.judul,
+          mapel: soal.mapel,
+          jenis_ujian: soal.jenis_ujian,
+          durasi_menit: soal.durasi_menit
+        }"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { type Test } from '~/types/test.types'
+const { GetTest } = useTest()
+
 definePageMeta({
   layout: 'admin',
-  // middleware: auth
+  middleware: 'auth'
 })
 
 import { ref } from 'vue'
-import auth from '~/middleware/auth'
+// import auth from '~/middleware/auth'
 
-const soalList = ref([
-  { title: "Matematika 1", guru: "Ir. Joko Widodo", mapel: "Matematika", jumlah: 70 },
-  { title: "Matematika 2", guru: "Pak Prabowo", mapel: "Matematika", jumlah: 80 },
-  { title: "Fisika Dasar", guru: "Mas Gibran", mapel: "Fisika", jumlah: 50 },
-  { title: "Kimia", guru: "Mas Kaesang", mapel: "Kimia", jumlah: 60 }
-])
+const soalList = ref<Test[]>([])
+
+onMounted(async () => {
+  try {
+    const data = await GetTest()
+    soalList.value = data
+  } catch (error) {
+    
+  }
+})
 
 const addSoal = () => alert("Tambah soal belum diimplementasikan :v")
 const deleteSoal = () => alert("Hapus soal belum diimplementasikan 🙏")
