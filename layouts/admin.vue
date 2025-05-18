@@ -1,9 +1,9 @@
 <!-- layouts/admin.vue -->
 <template>
   <div class="flex min-h-screen bg-primary-dark text-white">
-    <SidebarAdmin />
+    <AdminSidebar />
     <div class="flex-1">
-      <TopBarAdmin />
+      <AdminTopbar />
       <main class="p-6">
         <slot />
       </main>
