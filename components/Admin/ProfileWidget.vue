@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-4 flex flex-col border-t border-tertiary-dark rounded-t-2xl"> 
+  <div class="sticky z-50 bottom-0 w-full p-4 flex flex-col border-t border-tertiary-dark rounded-t-2xl"> 
     <div class="w-full flex justify-between items-center px-2">
       <div class="flex gap-3 items-center">
         <UAvatar />
