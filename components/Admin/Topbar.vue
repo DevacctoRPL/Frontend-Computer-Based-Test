@@ -1,0 +1,6 @@
+<template>
+  <div class="w-full h-16 bg-primary-dark border-b border-tertiary-dark px-6 py-4 flex items-center gap-2">
+    <Icon name="lucide:panel-left" class="w-6 h-6 cursor-pointer" />
+    <h1 class="text-xl font-bold">Soal</h1>
+  </div>
+</template>
