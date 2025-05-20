@@ -107,7 +107,6 @@
 
 
 const formData = ref({
-  id: '',
   judul: '',
   deskripsi: '',
   durasi_menit: '',

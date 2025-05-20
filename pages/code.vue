@@ -24,7 +24,7 @@
             }"
             class="w-full"
           />
-          </UFormField>
+        </UFormField>
         <UButton
           variant="outline"
           type="submit"

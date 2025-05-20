@@ -10,7 +10,6 @@
         v-for="(soal, index) in soalList"
         :key="index"
         :soal="{
-          id: soal.id,
           judul: soal.judul,
           mapel: soal.mapel,
           jenis_ujian: soal.jenis_ujian,
