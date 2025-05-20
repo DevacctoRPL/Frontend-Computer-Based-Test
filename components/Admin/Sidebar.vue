@@ -1,6 +1,6 @@
 <template>
-  <aside class="relative w-64 bg-primary-dark flex justify-between flex-col">
-    <div>
+  <aside class="sticky z-50 w-64 bg-primary-dark flex justify-between flex-col">
+    <div class="sticky top-0">
       <div class="flex items-center h-16 px-4">
         <img src="~/assets/images/Penus.webp" alt="Logo" class="w-12" />
         <h1 class="text-2xl font-semibold">

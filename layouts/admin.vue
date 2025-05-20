@@ -1,7 +1,7 @@
 <!-- layouts/admin.vue -->
 <template>
   <div class="flex min-h-screen bg-primary-dark text-white">
-    <AdminSidebar />
+    <AdminSidebar class="fixed" />
     <div class="flex-1">
       <AdminTopbar />
       <main class="p-6">

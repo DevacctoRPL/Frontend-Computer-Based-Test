@@ -1,39 +1,39 @@
-import type { Test } from "~/types/test.types"
-
+import type { Test } from "~/types/main.types";
 
 export const useTest = () => {
+  const BASE_URL = useRuntimeConfig().public.apiBase;
+  const { getToken } = useStorage();
 
-  const BASE_URL = useRuntimeConfig().public.apiBase
-  const { getToken} = useStorage()
-
-  const token = getToken()
+  const token = getToken();
 
   const GetTest = async () => {
-    const response = await $fetch<{data: Test[]}>(`${BASE_URL}/api/guru/tes/show`, {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+    const response = await $fetch<{ data: Test[] }>(
+      `${BASE_URL}/api/guru/tes/show`,
+      {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    })
-    return response.data
-  } 
+    );
+    return response.data;
+  };
 
-  const CreateTest = async (formData : Test) => {
+  const CreateTest = async (formData: Test) => {
     const response = await $fetch<Test>(`${BASE_URL}/api/guru/tes/create`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: formData
-    })
+      body: formData,
+    });
 
-    return response
-  }
+    return response;
+  };
 
-  return {GetTest, CreateTest}
-  
-}
+  return { GetTest, CreateTest };
+};

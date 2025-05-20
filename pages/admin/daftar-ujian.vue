@@ -1,19 +1,28 @@
 <template>
   <div>
     <div class="flex gap-4 mb-6">
-      <UButton class="bg-primary-light hover:bg-answered" icon="lucide:edit" @click="addSoal" >Tambah Soal</UButton>
-      <UButton class="bg-primary-light text-red-600 hover:bg-red-600 hover:text-primary-dark" icon="lucide:trash-2" @click="deleteSoal"></UButton>
+      <UButton
+        class="bg-primary-light hover:bg-answered"
+        icon="lucide:edit"
+        @click="addUjian"
+        >Tambah ujian</UButton
+      >
+      <UButton
+        class="bg-primary-light text-red-600 hover:bg-red-600 hover:text-primary-dark"
+        icon="lucide:trash-2"
+        @click="deleteUjian"
+      ></UButton>
     </div>
 
     <div class="flex flex-wrap gap-4">
       <CardUjian
-        v-for="(soal, index) in soalList"
+        v-for="(ujian, index) in ujianList"
         :key="index"
-        :soal="{
-          judul: soal.judul,
-          mapel: soal.mapel,
-          jenis_ujian: soal.jenis_ujian,
-          durasi_menit: soal.durasi_menit
+        :ujian="{
+          judul: ujian.judul,
+          mapel: ujian.mapel,
+          jenis_ujian: ujian.jenis_ujian,
+          durasi_menit: ujian.durasi_menit,
         }"
       />
     </div>
@@ -21,28 +30,25 @@
 </template>
 
 <script setup lang="ts">
-import { type Test } from '~/types/test.types'
-const { GetTest } = useTest()
+import { type Test } from "~/types/main.types";
+const { GetTest } = useTest();
 
 definePageMeta({
-  layout: 'admin',
-  middleware: 'auth'
-})
+  layout: "admin",
+  middleware: "auth",
+});
 
-import { ref } from 'vue'
-// import auth from '~/middleware/auth'
+import { ref } from "vue";
 
-const soalList = ref<Test[]>([])
+const ujianList = ref<Test[]>([]);
 
 onMounted(async () => {
   try {
-    const data = await GetTest()
-    soalList.value = data
-  } catch (error) {
-    
-  }
-})
+    const data = await GetTest();
+    ujianList.value = data;
+  } catch (error) {}
+});
 
-const addSoal = () => alert("Tambah soal belum diimplementasikan :v")
-const deleteSoal = () => alert("Hapus soal belum diimplementasikan 🙏")
+const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
+const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
 </script>
