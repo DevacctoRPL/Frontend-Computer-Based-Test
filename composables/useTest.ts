@@ -3,7 +3,7 @@ import type { Test } from "~/types/test.types"
 
 export const useTest = () => {
 
-  const BASE_URL = 'http://127.0.0.1:8000'
+  const BASE_URL = useRuntimeConfig().public.apiBase
   const { getToken} = useStorage()
 
   const token = getToken()
