@@ -35,5 +35,35 @@ export const useTest = () => {
     return response;
   };
 
-  return { GetTest, CreateTest };
+  const GetTestById = async (id: string) => {
+    const response = await $fetch<{ data: Test }>(
+      `${BASE_URL}/api/guru/tes/show/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  };
+  const EditTest = async (id: string, formData: Test) => {
+    const response = await $fetch<Test>(
+      `${BASE_URL}/api/guru/tes/update/${id}`,
+      {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+  };
+  return { GetTest, CreateTest, GetTestById, EditTest };
 };

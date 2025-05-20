@@ -103,10 +103,11 @@
       middleware: 'auth'      
   })
 
-  const {CreateTest} = useTest()
+const { CreateTest} = useTest()
 
 
 const formData = ref({
+  id: '',
   judul: '',
   deskripsi: '',
   durasi_menit: '',
