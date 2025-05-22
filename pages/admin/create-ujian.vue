@@ -107,7 +107,7 @@ const { CreateTest} = useTest()
 
 
 const formData = ref({
-  id: '',
+  id: '', 
   judul: '',
   deskripsi: '',
   durasi_menit: '',
@@ -126,6 +126,7 @@ const handleSubmit = async () => {
   try {
     const response = await CreateTest(formData.value)
     console.log("berhasil", response)
+    navigateTo('/admin/daftar-ujian')
 
   } catch (error) {
     console.error("Gagal membuat tes:", error)

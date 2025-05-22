@@ -1,12 +1,8 @@
 <template>
-<UCard class="bg-primary-dark border border-answered w-80 h-64 flex justify-start">
+<UCard class="bg-primary-dark border border-answered w-80 h-72 flex justify-start">
 
   <NuxtLink :href="`/admin/update-ujian/${ujian.id}`">
-
-
-    <button class="bg-answered px-3 rounded-2xl" icon="lucide:edit" @click="" >edit</button>
-
-
+    <button class="bg-answered px-3 rounded-sm text-primary-dark" icon="lucide:edit" @click="" >edit</button>
   </NuxtLink>
   <div class="flex flex-col gap-y-2">
     <h3 class="text-lg font-semibold">{{ ujian.judul }}</h3>
@@ -15,7 +11,6 @@
     <p class="text-lg">Durasi:<br> <span class="text-base text-primary-light opacity-40">{{ ujian.durasi_menit }} Meint</span></p>
   </div>
 </UCard>
-
 </template>
 
 <script setup lang="ts">
