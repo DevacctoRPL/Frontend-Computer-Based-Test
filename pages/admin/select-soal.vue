@@ -75,6 +75,7 @@ import { ref } from "vue";
 
 definePageMeta({
   layout: "admin",
+  middleware: 'auth'
 });
 
 const form = ref({

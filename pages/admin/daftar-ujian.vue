@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { type Test } from "~/types/main.types";
-const { GetTest } = useTest();
+const { GetTest, DeleteAllTest } = useTest();
 
 definePageMeta({
   layout: "admin",
@@ -56,9 +56,25 @@ const fetchTests = async () => {
 onMounted(fetchTests);
 
 const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
-const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
+const deleteUjian = async() => {
+  const konfirmasi = confirm('yakin mau hapus semua??')
+  if (!konfirmasi) {
+    return 
+  }
+
+  try {
+    await DeleteAllTest()
+    alert('semua ujian/Tedt di apus')
+    await fetchTests()
+  } catch (error) {
+    alert('gagal hapus')
+    console.log(error)
+  }
+}
 
 const handleDeleted = async () => {
   await fetchTests();
 };
+
+
 </script>
