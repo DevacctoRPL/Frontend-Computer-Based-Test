@@ -107,7 +107,7 @@ const { CreateTest} = useTest()
 
 
 const formData = ref({
-  id: '', 
+  tes_id: '', 
   judul: '',
   deskripsi: '',
   durasi_menit: '',

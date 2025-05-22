@@ -78,6 +78,17 @@ export const useTest = () => {
     });
   };
 
+  const DeleteAllTest = async() => {
+    const response = await $fetch(`${BASE_URL}/api/guru/tes/deleteall`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    })
+  }
 
-  return { GetTest, CreateTest, GetTestById, EditTest, DeleteTest };
+
+  return { GetTest, CreateTest, GetTestById, EditTest, DeleteTest, DeleteAllTest };
 };
