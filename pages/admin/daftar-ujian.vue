@@ -19,7 +19,7 @@
         v-for="(ujian, index) in ujianList"
         :key="index"
         :ujian="{
-          id: ujian.id,
+          id: ujian.tes_id,
           judul: ujian.judul,
           mapel: ujian.mapel,
           jenis_ujian: ujian.jenis_ujian,
