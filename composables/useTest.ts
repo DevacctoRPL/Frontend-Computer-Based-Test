@@ -10,7 +10,7 @@ export const useTest = () => {
     const response = await $fetch<{ data: Test[] }>(
       `${BASE_URL}/api/guru/tes/show`,
       {
-        method: "get",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -35,29 +35,28 @@ export const useTest = () => {
     return response;
   };
 
-const GetTestById = async (id: string) => {
-  const response = await $fetch<{ data: Test }>(
-    `${BASE_URL}/api/guru/tes/show/${id}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const GetTestById = async (id: string) => {
+    const response = await $fetch<{ data: Test }>(
+      `${BASE_URL}/api/guru/tes/show/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  console.log(response.data); // cek data di console
-  return response.data;
-};
-
+    console.log(response.data); // cek data di console
+    return response.data;
+  };
 
   const EditTest = async (id: string, formData: Test) => {
     const response = await $fetch<Test>(
       `${BASE_URL}/api/guru/tes/update/${id}`,
       {
-        method: "put",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -66,7 +65,19 @@ const GetTestById = async (id: string) => {
         body: formData,
       }
     );
-
   };
-  return { GetTest, CreateTest, GetTestById, EditTest };
+
+  const DeleteTest = async (id: string) => {
+    const response = await $fetch(`${BASE_URL}/api/guru/tes/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+
+  return { GetTest, CreateTest, GetTestById, EditTest, DeleteTest };
 };
