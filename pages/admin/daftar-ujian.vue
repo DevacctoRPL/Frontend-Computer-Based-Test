@@ -25,6 +25,7 @@
           jenis_ujian: ujian.jenis_ujian,
           durasi_menit: ujian.durasi_menit,
         }"
+        @deleted="handleDeleted"
       />
     </div>
   </div>
@@ -43,13 +44,21 @@ import { ref } from "vue";
 
 const ujianList = ref<Test[]>([]);
 
-onMounted(async () => {
+const fetchTests = async () => {
   try {
     const data = await GetTest();
     ujianList.value = data;
-  } catch (error) {}
-});
+  } catch (error) {
+    console.error('Failed to fetch tests:', error);
+  }
+};
+
+onMounted(fetchTests);
 
 const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
 const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
+
+const handleDeleted = async () => {
+  await fetchTests();
+};
 </script>
