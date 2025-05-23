@@ -3,9 +3,7 @@
     <div class="sticky top-0">
       <div class="flex items-center h-16 px-4">
         <img src="~/assets/images/Penus.webp" alt="Logo" class="w-12" />
-        <h1 class="text-2xl font-semibold">
-          Cobate
-        </h1>
+        <h1 class="text-2xl font-semibold">Cobate</h1>
       </div>
       <nav class="flex flex-col gap-2 p-4">
         <NuxtLink
@@ -45,8 +43,9 @@
   </aside>
 </template>
 
-<style scoped>
-.exactActiveClass {
-  background-color: var(--color-tertiary-dark);
+<style>
+.router-link-activ,
+.router-link-exact-active {
+  background-color: var(--color-tertiary-dark) !important;
 }
 </style>

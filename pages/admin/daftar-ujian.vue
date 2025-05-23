@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="flex gap-4 mb-6">
+    <div class="flex gap-4 mb-6 border-b border-tertiary-dark pb-2.5">
       <UButton
-        class="bg-primary-light hover:bg-answered"
+        class="bg-primary-light hover:bg-answered cursor-pointer"
         icon="lucide:edit"
         @click="addUjian"
         >Tambah ujian</UButton
       >
       <UButton
-        class="bg-primary-light text-red-600 hover:bg-red-600 hover:text-primary-dark"
+        class="bg-primary-light hidden text-red-600 hover:bg-red-600 hover:text-primary-dark"
         icon="lucide:trash-2"
         @click="deleteUjian"
       ></UButton>
     </div>
 
-    <div class="flex flex-wrap gap-4">
+    <div v-if="ujianList.length != 0" class="flex flex-wrap gap-4">
       <CardUjian
         v-for="(ujian, index) in ujianList"
         :key="index"
@@ -28,6 +28,11 @@
         @deleted="handleDeleted"
       />
     </div>
+    <div v-else>
+      <p class="text-center text-primary-light">
+        Belum ada ujian yang dibuat
+      </p>
+    </div>
   </div>
 </template>
 
@@ -38,6 +43,7 @@ const { GetTest, DeleteAllTest } = useTest();
 definePageMeta({
   layout: "admin",
   middleware: "auth",
+  path: "/admin/ujian",
 });
 
 import { ref } from "vue";
@@ -55,6 +61,12 @@ const fetchTests = async () => {
 
 onMounted(fetchTests);
 
+<<<<<<< HEAD
+const addUjian = () => {
+  navigateTo('/admin/create-ujian')
+};
+const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
+=======
 const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
 const deleteUjian = async() => {
   const konfirmasi = confirm('yakin mau hapus semua??')
@@ -77,4 +89,5 @@ const handleDeleted = async () => {
 };
 
 
+>>>>>>> 7a70c214afa902bf1c1385661a107c25cc0e879d
 </script>
