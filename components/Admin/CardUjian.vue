@@ -1,12 +1,7 @@
 <template>
 <UCard class="bg-primary-dark border border-answered w-80 h-64 flex justify-start">
-
   <NuxtLink :href="`/admin/update-ujian/${ujian.id}`">
-
-
     <button class="bg-answered px-3 rounded-2xl" icon="lucide:edit" @click="" >edit</button>
-
-
   </NuxtLink>
   <div class="flex flex-col gap-y-2">
     <h3 class="text-lg font-semibold">{{ ujian.judul }}</h3>

@@ -1,11 +1,11 @@
 export interface Test {
-   id: string
+  id: string
   judul: string
   deskripsi: string
-  durasi_menit: string
+  durasi_menit: number
   tanggal_mulai: string
   tanggal_selesai: string
-  batas_percobaan: string
+  batas_percobaan: number
   password_tes: string
   mapel: string
   jenis_ujian: string
