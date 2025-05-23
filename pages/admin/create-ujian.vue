@@ -145,6 +145,7 @@
           <div>
             <label class="block mb-1">Jenis Ujian</label>
             <USelect
+              v-model="formData.jenis_ujian"
               :ui="{
                 base: 'bg-primary-dark ring-primary-light/50 w-full p-2',
               }"
@@ -200,36 +201,40 @@
 </template>
 
 <script lang="ts" setup>
-import type { Test } from "~/types/main.types";
+  definePageMeta({
+      layout: 'admin',
+      middleware: 'auth'      
+  })
 
-definePageMeta({
-  layout: "admin",
-  middleware: "auth",
-});
+const { CreateTest} = useTest()
 
-const { CreateTest } = useTest();
+const jenisUjian = [
+  'PAS',
+  'PAT'
+]
 
-const jenisUjian = ref(["PTS", "PAS"]);
-const formData = ref<Test>({
-  id: "",
-  judul: "",
-  deskripsi: "",
+const formData = ref({
+  tes_id: '', 
+  judul: '',
+  deskripsi: '',
   durasi_menit: 0,
-  tanggal_mulai: "",
-  tanggal_selesai: "",
-  batas_percobaan: "",
-  password_tes: "",
-  mapel: "",
-  jenis_ujian: "",
-  semester: "",
-  kelas: ["", ""],
-  jam_mulai: "",
-});
+  tanggal_mulai: '',
+  tanggal_selesai: '',
+  batas_percobaan: 0,
+  password_tes: '',
+  mapel: '',
+  jenis_ujian: '',
+  semester: '',
+  kelas: ['', ''],
+  jam_mulai: ''
+})
 
 const handleSubmit = async () => {
   try {
-    const response = await CreateTest(formData.value);
-    console.log("berhasil", response);
+    const response = await CreateTest(formData.value)
+    console.log("berhasil", response)
+    navigateTo('/admin/daftar-ujian')
+
   } catch (error) {
     console.error("Gagal membuat tes:", error);
   }

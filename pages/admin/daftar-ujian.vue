@@ -19,12 +19,13 @@
         v-for="(ujian, index) in ujianList"
         :key="index"
         :ujian="{
-          id: ujian.id,
+          id: ujian.tes_id,
           judul: ujian.judul,
           mapel: ujian.mapel,
           jenis_ujian: ujian.jenis_ujian,
           durasi_menit: ujian.durasi_menit,
         }"
+        @deleted="handleDeleted"
       />
     </div>
     <div v-else>
@@ -37,7 +38,7 @@
 
 <script setup lang="ts">
 import { type Test } from "~/types/main.types";
-const { GetTest } = useTest();
+const { GetTest, DeleteAllTest } = useTest();
 
 definePageMeta({
   layout: "admin",
@@ -49,15 +50,44 @@ import { ref } from "vue";
 
 const ujianList = ref<Test[]>([]);
 
-onMounted(async () => {
+const fetchTests = async () => {
   try {
     const data = await GetTest();
     ujianList.value = data;
-  } catch (error) {}
-});
+  } catch (error) {
+    console.error('Failed to fetch tests:', error);
+  }
+};
 
+onMounted(fetchTests);
+
+<<<<<<< HEAD
 const addUjian = () => {
   navigateTo('/admin/create-ujian')
 };
 const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
+=======
+const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
+const deleteUjian = async() => {
+  const konfirmasi = confirm('yakin mau hapus semua??')
+  if (!konfirmasi) {
+    return 
+  }
+
+  try {
+    await DeleteAllTest()
+    alert('semua ujian/Tedt di apus')
+    await fetchTests()
+  } catch (error) {
+    alert('gagal hapus')
+    console.log(error)
+  }
+}
+
+const handleDeleted = async () => {
+  await fetchTests();
+};
+
+
+>>>>>>> 7a70c214afa902bf1c1385661a107c25cc0e879d
 </script>

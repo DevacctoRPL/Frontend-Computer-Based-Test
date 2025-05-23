@@ -1,5 +1,5 @@
 export interface Test {
-  id: string
+  tes_id: string
   judul: string
   deskripsi: string
   durasi_menit: number
