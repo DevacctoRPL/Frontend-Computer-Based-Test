@@ -184,27 +184,20 @@
         <!-- Kelas-->
         <div>
           <label class="block mb-1">Kelas</label>
-          <div class="space-y-2">
-            <UInput
-              v-model="formData.kelas[0]"
-              type="text"
-              :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
-              }"
-              size="xl"
-              class="w-full"
-              placeholder="Kelas 1 (misal: XI-RPL-2)"
-            />
-            <UInput
-              v-model="formData.kelas[1]"
-              type="text"
-              :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
-              }"
-              size="xl"
-              class="w-full"
-              placeholder="Kelas 2 (misal: XI-RPL-2)"
-            />
+          <div class="grid grid-cols-2 gap-2">
+            <div
+              v-for="kelas in DaftarKelas"
+              :key="kelas"
+              class="flex items-center"
+            >
+              <input
+                type="checkbox"
+                :value="kelas"
+                v-model="formData.kelas"
+                class="mr-2 accent-answered"
+              />
+              <label>{{ kelas }}</label>
+            </div>
           </div>
         </div>
 
@@ -234,7 +227,49 @@ const jenisUjian = ["PAS", "PAT"];
 
 const tes_id = useRoute().params.id as string;
 
-const formData = ref({
+const DaftarKelas = [
+  "X-RPL-1",
+  "X-RPL-2",
+  "XI-RPL-1",
+  "XI-RPL-2",
+  "XI-RPL-3",
+  "X-TKJ-1",
+  "X-TKJ-2",
+  "X-TKJ-3",
+  "XI-TKJ-1",
+  "XI-TKJ-2",
+  "XI-TKJ-3",
+  "X-MM-1",
+  "X-MM-2",
+  "X-MM-3",
+  "X-MM-4",
+  "XI-MM-1",
+  "XI-MM-2",
+  "XI-MM-3",
+  "XI-MM-4",
+  "X-PKM-1",
+  "X-PKM-2",
+  "X-PKM-3",
+  "XI-PKM-1",
+  "XI-PKM-2",
+  "XI-PKM-3",
+];
+
+const formData = ref<{
+  tes_id: string;
+  judul: string;
+  deskripsi: string;
+  durasi_menit: number;
+  tanggal_mulai: string;
+  tanggal_selesai: string;
+  batas_percobaan: number;
+  password_tes: string;
+  mapel: string;
+  jenis_ujian: string;
+  semester: string;
+  kelas: string[];
+  jam_mulai: string;
+}>({
   tes_id: "",
   judul: "",
   deskripsi: "",
@@ -245,8 +280,8 @@ const formData = ref({
   password_tes: "",
   mapel: "",
   jenis_ujian: "",
-  semester: 0,
-  kelas: ["", ""],
+  semester: "",
+  kelas: [],
   jam_mulai: "",
 });
 
@@ -262,14 +297,14 @@ onMounted(async () => {
     judul: data.judul,
     deskripsi: data.deskripsi,
     durasi_menit: data.durasi_menit,
-    tanggal_mulai: formatDateForInput(data.tanggal_mulai),
-    tanggal_selesai: formatDateForInput(data.tanggal_selesai),
+    tanggal_mulai: data.tanggal_mulai,
+    tanggal_selesai: data.tanggal_selesai,
     batas_percobaan: data.batas_percobaan,
     password_tes: data.password_tes,
     mapel: data.mapel,
     jenis_ujian: data.jenis_ujian,
-    semester: Number(data.semester),
-    kelas: data.kelas ?? ["", ""],
+    semester: data.semester,
+    kelas: Array.isArray(data.kelas) ? data.kelas : [],
     jam_mulai: data.jam_mulai,
   };
 });
@@ -277,8 +312,8 @@ onMounted(async () => {
 const handleSubmit = async () => {
   try {
     await EditTest(tes_id, {
-      ... formData.value,
-      semester: formData.value.semester.toString()
+      ...formData.value,
+      semester: formData.value.semester.toString(),
     });
     alert("Berhasil mengupdate ujian.");
     navigateTo("/admin/ujian");
