@@ -1,7 +1,7 @@
 <template>
   <div class="h-full text-white flex items-center justify-center px-4">
     <div
-      class="w-full max-w-3xl ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered rounded-lg p-6"
+      class="w-full max-w-3xl ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30 rounded-lg p-6"
     >
       <h2 class="text-3xl font-bold text-center mb-6">Detail Ujian</h2>
 
@@ -12,7 +12,7 @@
           <UInput
             v-model="formData.judul"
             :ui="{
-              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus:outline-none focus:ring-0 focus:ring-answered placeholder:text-primary-light/50',
+              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/30',
             }"
             type="text"
             class="w-full"
@@ -24,12 +24,15 @@
         <!-- Deskripsi nya-->
         <div>
           <label class="block mb-1">Deskripsi</label>
-          <textarea
+          <UTextarea
             v-model="formData.deskripsi"
-            rows="3"
-            class="w-full rounded-md p-2 ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered"
+            :rows="3"
+            :ui="{
+              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/30',
+            }"
+            class="w-full"
             placeholder="Masukkan deskripsi..."
-          ></textarea>
+          ></UTextarea>
         </div>
 
         <!-- Durasi Menit -->
@@ -38,11 +41,10 @@
           <UInputNumber
             v-model="formData.durasi_menit"
             :ui="{
-              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus:outline-none focus:ring-0 focus:ring-answered placeholder:text-primary-light/50',
+              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light ',
             }"
             :min="1"
             :max="120"
-            orientation="vertical"
             color="primary"
             :increment="{
               color: 'neutral',
@@ -51,6 +53,7 @@
               color: 'neutral',
             }"
             placeholder="Misal: 90"
+            class="w-full"
           />
         </div>
 
@@ -61,7 +64,7 @@
             <UInput
               v-model="formData.tanggal_mulai"
               :ui="{
-                base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus:outline-none focus:ring-0 focus:ring-answered placeholder:text-primary-light/50',
+                base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light',
               }"
               size="xl"
               type="date"
@@ -73,7 +76,7 @@
             <UInput
               v-model="formData.tanggal_selesai"
               :ui="{
-                base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus:outline-none focus:ring-0 focus:ring-answered placeholder:text-primary-light/50',
+                base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light ',
               }"
               size="xl"
               type="date"
@@ -88,7 +91,7 @@
           <UInput
             v-model="formData.jam_mulai"
             :ui="{
-              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered',
+              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
             }"
             type="time"
             size="xl"
@@ -101,7 +104,7 @@
           <UInputNumber
             v-model="formData.batas_percobaan"
             :ui="{
-              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered',
+              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
             }"
             :increment="{
               color: 'neutral',
@@ -120,7 +123,7 @@
           <UInput
             v-model="formData.password_tes"
             :ui="{
-              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered',
+              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
             }"
             type="text"
             size="xl"
@@ -135,7 +138,7 @@
             <UInput
               v-model="formData.mapel"
               :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered',
+                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
               }"
               type="text"
               size="xl"
@@ -162,8 +165,18 @@
           <label class="block mb-1">Semester</label>
           <UInput
             v-model="formData.semester"
-            type="number"
-            class="w-full p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered"
+            :ui="{
+              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+            }"
+            class="w-full"
+            :increment="{
+              color: 'neutral',
+            }"
+            :decrement="{
+              color: 'neutral',
+            }"
+            :min="1"
+            size="xl"
           />
         </div>
 
@@ -174,14 +187,22 @@
             <UInput
               v-model="formData.kelas[0]"
               type="text"
-              class="w-full p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered"
+              :ui="{
+                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              }"
+              size="xl"
+              class="w-full"
               placeholder="Kelas 1 (misal: XI-RPL-2)"
             />
             <UInput
               v-model="formData.kelas[1]"
               type="text"
-              class="w-full p-2 rounded-md ring ring-primary-light/50 focus:outline-none focus:ring-0 focus:ring-answered"
-              placeholder="Kelas 2 (misal: XII-RPL-3)"
+              :ui="{
+                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              }"
+              size="xl"
+              class="w-full"
+              placeholder="Kelas 2 (misal: XI-RPL-2)"
             />
           </div>
         </div>
@@ -190,7 +211,7 @@
         <div class="pt-4">
           <button
             type="submit"
-            class="w-full hover:ring-answered ring ring-gray-600 py-2 rounded-md text-white"
+            class="w-full hover:ring-primary-light cursor-pointer ring ring-primary-light/50 py-2 rounded-md text-white"
           >
             Buat Ujian
           </button>
@@ -201,40 +222,40 @@
 </template>
 
 <script lang="ts" setup>
-  definePageMeta({
-      layout: 'admin',
-      middleware: 'auth'      
-  })
+definePageMeta({
+  layout: "admin",
+  middleware: "auth",
+  path: "/admin/ujian/tambah",
+});
 
-const { CreateTest} = useTest()
+const { CreateTest } = useTest();
 
-const jenisUjian = [
-  'PAS',
-  'PAT'
-]
+const jenisUjian = ["PAS", "PAT"];
 
 const formData = ref({
-  tes_id: '', 
-  judul: '',
-  deskripsi: '',
+  tes_id: "",
+  judul: "",
+  deskripsi: "",
   durasi_menit: 0,
-  tanggal_mulai: '',
-  tanggal_selesai: '',
+  tanggal_mulai: "",
+  tanggal_selesai: "",
   batas_percobaan: 0,
-  password_tes: '',
-  mapel: '',
-  jenis_ujian: '',
-  semester: '',
-  kelas: ['', ''],
-  jam_mulai: ''
-})
+  password_tes: "",
+  mapel: "",
+  jenis_ujian: "",
+  semester: 0,
+  kelas: ["", ""],
+  jam_mulai: "",
+});
 
 const handleSubmit = async () => {
   try {
-    const response = await CreateTest(formData.value)
-    console.log("berhasil", response)
-    navigateTo('/admin/daftar-ujian')
-
+    const response = await CreateTest({
+      ... formData.value,
+      semester: formData.value.semester.toString()
+    })
+    console.log("berhasil", response);
+    navigateTo("/admin/ujian");
   } catch (error) {
     console.error("Gagal membuat tes:", error);
   }
