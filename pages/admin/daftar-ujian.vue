@@ -4,18 +4,18 @@
       <UButton
         class="bg-primary-light hover:bg-answered cursor-pointer"
         icon="lucide:edit"
-        @click="addUjian"
+        @click="navigateTo('/admin/ujian/tambah')"
         >Tambah ujian</UButton
       >
       <UButton
-        class="bg-primary-light hidden text-red-600 hover:bg-red-600 hover:text-primary-dark"
+        class="bg-primary-light text-red-600 hover:bg-red-600 hover:text-primary-dark"
         icon="lucide:trash-2"
         @click="deleteUjian"
       ></UButton>
     </div>
 
     <div v-if="ujianList.length != 0" class="flex flex-wrap gap-4">
-      <CardUjian
+      <AdminCardUjian
         v-for="(ujian, index) in ujianList"
         :key="index"
         :ujian="{
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { type Test } from "~/types/main.types";
-const { GetTest, DeleteAllTest } = useTest();
+const { GetTest, DeleteAllTest, DeleteTest } = useTest();
 
 definePageMeta({
   layout: "admin",
@@ -54,6 +54,7 @@ const fetchTests = async () => {
   try {
     const data = await GetTest();
     ujianList.value = data;
+    console.log(ujianList.value);
   } catch (error) {
     console.error('Failed to fetch tests:', error);
   }
@@ -61,13 +62,6 @@ const fetchTests = async () => {
 
 onMounted(fetchTests);
 
-<<<<<<< HEAD
-const addUjian = () => {
-  navigateTo('/admin/create-ujian')
-};
-const deleteUjian = () => alert("Hapus ujian belum diimplementasikan 🙏");
-=======
-const addUjian = () => alert("Tambah ujian belum diimplementasikan :v");
 const deleteUjian = async() => {
   const konfirmasi = confirm('yakin mau hapus semua??')
   if (!konfirmasi) {
@@ -89,5 +83,4 @@ const handleDeleted = async () => {
 };
 
 
->>>>>>> 7a70c214afa902bf1c1385661a107c25cc0e879d
 </script>
