@@ -5,7 +5,7 @@
     <div class="flex gap-3">
       <NuxtLink :href="`/admin/ujian/update/${ujian.id}`">
         <button
-          class="bg-answered px-3 rounded-sm text-primary-dark"
+          class="bg-answered px-3 rounded-sm text-primary-dark cursor-pointer"
           icon="lucide:edit"
           @click=""
         >
@@ -13,7 +13,7 @@
         </button>
       </NuxtLink>
       <button
-        class="bg-red-500 px-3 rounded-sm text-primary-dark"
+        class="bg-red-500 px-3 rounded-sm text-primary-dark cursor-pointer"
         icon="lucide:delete"
         @click="handleDelete"
       >

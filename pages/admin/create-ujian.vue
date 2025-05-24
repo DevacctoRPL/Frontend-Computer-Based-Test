@@ -181,31 +181,25 @@
         </div>
 
         <!-- Kelas-->
-        <div>
+         <div>
           <label class="block mb-1">Kelas</label>
-          <div class="space-y-2">
-            <UInput
-              v-model="formData.kelas[0]"
-              type="text"
-              :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
-              }"
-              size="xl"
-              class="w-full"
-              placeholder="Kelas 1 (misal: XI-RPL-2)"
-            />
-            <UInput
-              v-model="formData.kelas[1]"
-              type="text"
-              :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
-              }"
-              size="xl"
-              class="w-full"
-              placeholder="Kelas 2 (misal: XI-RPL-2)"
-            />
-          </div>
+          <div class="grid grid-cols-2 gap-2">
+        <div
+          v-for="kelas in DaftarKelas"
+          :key="kelas"
+          class="flex items-center"
+        >
+          <input
+            type="checkbox"
+            :value="kelas"
+            v-model="formData.kelas"
+            class="mr-2 accent-answered"
+          />
+          <label>{{ kelas }}</label>
         </div>
+        </div>
+         </div>
+            
 
         <!-- Tombol bol tombol -->
         <div class="pt-4">
@@ -230,6 +224,34 @@ definePageMeta({
 
 const { CreateTest } = useTest();
 
+const DaftarKelas = [
+  "X-RPL-1",
+  "X-RPL-2",
+  "XI-RPL-1",
+  "XI-RPL-2",
+  "XI-RPL-3",
+  "X-TKJ-1",
+  "X-TKJ-2",
+  "X-TKJ-3",
+  "XI-TKJ-1",
+  "XI-TKJ-2",
+  "XI-TKJ-3",
+  "X-MM-1",
+  "X-MM-2",
+  "X-MM-3",
+  "X-MM-4",
+  "XI-MM-1",
+  "XI-MM-2",
+  "XI-MM-3",
+  "XI-MM-4",
+  "X-PKM-1",
+  "X-PKM-2",
+  "X-PKM-3",
+  "XI-PKM-1",
+  "XI-PKM-2",
+  "XI-PKM-3",
+];
+
 const jenisUjian = ["PAS", "PAT"];
 
 const formData = ref({
@@ -243,11 +265,11 @@ const formData = ref({
   password_tes: "",
   mapel: "",
   jenis_ujian: "",
-  semester: 0,
-  kelas: ["", ""],
-  jam_mulai: "",
-});
+  semester: "",
+  kelas: [],
+  jam_mulai: "",})
 
+  
 const handleSubmit = async () => {
   try {
     const response = await CreateTest({
