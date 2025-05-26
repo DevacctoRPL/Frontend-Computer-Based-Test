@@ -13,3 +13,12 @@ export interface Test {
   kelas: string[];
   jam_mulai: string;
 }
+
+export interface Soal {
+  soal_id: string;
+  tes_id: string;
+  jenis_soal: string;
+  pertanyaan: string;
+  file_gambar: string;
+  poin: number;
+}

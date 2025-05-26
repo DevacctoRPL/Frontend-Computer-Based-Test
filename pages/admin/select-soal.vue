@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex items-center justify-center text-white">
     <div
-      class="w-full max-w-md mb-4 p-6 border border-white/20 rounded-xl shadow-md"
+      class="w-full h-80 max-w-md mb-4 p-6 border border-white/20 rounded-xl shadow-md"
     >
       <UButton
         class="text-sm hover:text-white text-white"
@@ -11,52 +11,33 @@
       >
         Kembali
       </UButton>
-      
+
       <h1 class="text-2xl font-bold text-center mb-6">Detail Soal</h1>
 
       <form @submit.prevent="submitForm">
         <div class="mb-4">
-          <label class="block mb-1 text-white" for="title">Nama Soal</label>
-          <input
-            v-model="form.title"
-            type="text"
-            id="title"
-            placeholder="Masukan Nama Soal"
-            class="w-full px-4 py-2 border border-white/30 rounded-md focus:outline-none focus:ring-2 focus:ring-white bg-black text-white placeholder-white/50"
-          />
-        </div>
-
-        <div class="mb-4">
-          <label class="block mb-1 text-white" for="subject"
-            >Mata Pelajaran</label
-          >
-          <select
+          <label class="mb-1 text-primary-light" for="subject">Tes</label>
+          <USelect
+            :ui="{
+              base: 'w-full mb-10 z-50 bg-primary-dark outline-primary-light ring-1 ring-primary-light',
+              content: 'bg-primary-dark ring-1 ring-primary-light',
+              value: 'bg-primary-dark'
+            }"
+            
+            size="xl"
             v-model="form.subject"
-            id="subject"
-            class="w-full px-4 py-2 border border-white/30 rounded-md focus:outline-none focus:ring-2 focus:ring-white bg-black text-white"
-          >
-            <option disabled value="">Pilih Mata Pelajaran</option>
-            <option>Matematika</option>
-            <option>Bahasa Indonesia</option>
-            <option>IPA</option>
-            <option>IPS</option>
-          </select>
-        </div>
-
-        <div class="mb-6">
-          <label class="block mb-1 text-white" for="duration"
-            >Waktu Pengerjaan</label
-          >
-          <select
-            v-model="form.duration"
-            id="duration"
-            class="w-full px-4 py-2 bg-black border border-white/30 rounded-md focus:outline-none focus:ring-2 focus:ring-white text-white"
-          >
-            <option disabled value="">Pilih Waktu</option>
-            <option>30 Menit</option>
-            <option>60 Menit</option>
-            <option>90 Menit</option>
-          </select>
+            :items="              ujianList.map((test) => ({
+                label: test.judul,
+                value: test.tes_id,
+              }))"
+            :content="{
+              align: 'center',
+              side: 'bottom',
+              sideOffset: 8,
+            }"
+            placeholder="Pilih Tes"
+            class="text-primary-light"
+          />
         </div>
 
         <button
@@ -70,22 +51,43 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+// import { ref, onMounted } from "vue";
+// import { useRouter } from "vue-router";
+import { type Test } from "~/types/main.types";
 
-definePageMeta({
-  layout: "admin",
-  middleware: 'auth'
+const router = useRouter();
+const { GetTest } = useTest();
+
+const items = ref(['Backlog', 'Todo', 'In Progress', 'Done'])
+
+const ujianList = ref<Test[]>([]);
+
+onMounted(async () => {
+  try {
+    const data = await GetTest();
+    ujianList.value = data;
+    console.log(ujianList.value);
+  } catch (error) {
+    console.error("Gagal mengambil daftar tes:", error);
+  }
 });
 
 const form = ref({
-  title: "",
-  subject: "",
-  duration: "",
+  subject: "", // ini akan berisi tes_id dari USelect
 });
 
 function submitForm() {
-  console.log("Form Submitted:", form.value);
-  //   Simpen backend wok
+  if (!form.value.subject) {
+    alert("Silakan pilih tes terlebih dahulu.");
+    return;
+  }
+
+  // Navigasi ke halaman soal berdasarkan tes_id
+  router.push(`/admin/soal/${form.value.subject}`);
 }
 </script>
+
+<style scoped>
+/* jika ingin ubah style USelect text putih, bisa atur di sini */
+</style>
