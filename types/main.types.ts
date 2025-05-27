@@ -9,7 +9,7 @@ export interface Test {
   password_tes: string;
   mapel: string;
   jenis_ujian: string;
-  semester: string;
+  semester: number;
   kelas: string[];
   jam_mulai: string;
 }

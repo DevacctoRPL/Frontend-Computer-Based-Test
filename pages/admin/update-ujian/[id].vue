@@ -266,7 +266,7 @@ const formData = ref<{
   password_tes: string;
   mapel: string;
   jenis_ujian: string;
-  semester: string;
+  semester: number;
   kelas: string[];
   jam_mulai: string;
 }>({
@@ -280,7 +280,7 @@ const formData = ref<{
   password_tes: "",
   mapel: "",
   jenis_ujian: "",
-  semester: "",
+  semester: 0,
   kelas: [],
   jam_mulai: "",
 });
@@ -313,7 +313,6 @@ const handleSubmit = async () => {
   try {
     await EditTest(tes_id, {
       ...formData.value,
-      semester: formData.value.semester.toString(),
     });
     alert("Berhasil mengupdate ujian.");
     navigateTo("/admin/ujian");
