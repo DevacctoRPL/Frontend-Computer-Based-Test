@@ -11,7 +11,7 @@
             placeholder="Masukan Soal..."
             class="w-full h-32 p-4 border rounded bg-secondary-dark text-white"
           />
-          
+
           <button
             class="absolute bottom-2 right-2 text-sm text-blue-400 flex items-center gap-1"
           >
@@ -137,6 +137,7 @@
 <script setup>
 definePageMeta({
   layout: "admin",
+  middleware: "auth",
 });
 const route = useRoute();
 const router = useRouter();

@@ -1,9 +1,15 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-  const { getToken } = useStorage();
-  const token = getToken();
+export default defineNuxtRouteMiddleware(async (to, from) => {
+  const { getToken, getData } = useStorage();
+  const token = await getToken();
+  const data = await getData();
+  const allowedRoles = ["admin", "guru"];
 
-  if (to.path == '/admin') {
-    
+  if (!token || !data) {
+    return navigateTo("/login");
+  }
+
+  if (to.path.startsWith("/admin") && !allowedRoles.includes(data.role)) {
+    return navigateTo("/");
   }
 
   return true;

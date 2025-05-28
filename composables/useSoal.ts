@@ -6,23 +6,38 @@ export const useSoal = () => {
 
   const token = getToken();
 
-  const CreateSoal = async (tes_id: string, formData: Soal) => {
-    const response = await $fetch(`${BASE_URL}/api/guru/soal/create${tes_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData
-    });
+  const CreateSoal = async (tes_id: string, formData: FormData) => {
+    const response = await $fetch(
+      `${BASE_URL}/api/guru/soal/create/${tes_id}`,
+      {
+        method: "POST",
+        headers: {
+          // "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
 
     return response;
   };
 
-  return {CreateSoal}
-};
+  const SetJawaban = async (soal_id: string, jawaban: any) => {
+    const response = await $fetch(
+      `${BASE_URL}/api/guru/jawaban/create/${soal_id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: jawaban,
+      }
+    );
+    return response;
+  };
 
-const EditSoal = () => {
-  
-}
+  return { CreateSoal, SetJawaban };
+};

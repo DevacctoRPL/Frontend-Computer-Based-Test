@@ -4,9 +4,9 @@ export const useTest = () => {
   const BASE_URL = useRuntimeConfig().public.apiBase;
   const { getToken } = useStorage();
 
-  const token = getToken();
-
   const GetTest = async () => {
+    const token = await getToken();
+    
     const response = await $fetch<{ data: Test[] }>(
       `${BASE_URL}/api/guru/tes/show`,
       {
@@ -22,6 +22,8 @@ export const useTest = () => {
   };
 
   const CreateTest = async (formData: Test) => {
+    const token = await getToken();
+
     const response = await $fetch<Test>(`${BASE_URL}/api/guru/tes/create`, {
       method: "POST",
       headers: {
@@ -36,6 +38,8 @@ export const useTest = () => {
   };
 
   const GetTestById = async (id: string) => {
+    const token = await getToken();
+
     const response = await $fetch<{ data: Test }>(
       `${BASE_URL}/api/guru/tes/show/${id}`,
       {
@@ -53,6 +57,8 @@ export const useTest = () => {
   };
 
   const EditTest = async (id: string, formData: Test) => {
+    const token = await getToken();
+
     const response = await $fetch<Test>(
       `${BASE_URL}/api/guru/tes/update/${id}`,
       {
@@ -68,6 +74,8 @@ export const useTest = () => {
   };
 
   const DeleteTest = async (id: string) => {
+    const token = await getToken();
+
     const response = await $fetch(`${BASE_URL}/api/guru/tes/delete/${id}`, {
       method: "DELETE",
       headers: {
@@ -78,17 +86,25 @@ export const useTest = () => {
     });
   };
 
-  const DeleteAllTest = async() => {
+  const DeleteAllTest = async () => {
+    const token = await getToken();
+
     const response = await $fetch(`${BASE_URL}/api/guru/tes/deleteall`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
-      }
-    })
-  }
+      },
+    });
+  };
 
-
-  return { GetTest, CreateTest, GetTestById, EditTest, DeleteTest, DeleteAllTest };
+  return {
+    GetTest,
+    CreateTest,
+    GetTestById,
+    EditTest,
+    DeleteTest,
+    DeleteAllTest,
+  };
 };

@@ -29,9 +29,7 @@
       />
     </div>
     <div v-else>
-      <p class="text-center text-primary-light">
-        Belum ada ujian yang dibuat
-      </p>
+      <p class="text-center text-primary-light">Belum ada ujian yang dibuat</p>
     </div>
   </div>
 </template>
@@ -50,39 +48,35 @@ import { ref } from "vue";
 
 const ujianList = ref<Test[]>([]);
 
-
-
 const fetchTests = async () => {
   try {
     const data = await GetTest();
     ujianList.value = data;
     console.log(ujianList.value);
   } catch (error) {
-    console.error('Failed to fetch tests:', error);
+    console.error("Failed to fetch tests:", error);
   }
 };
 
 onMounted(fetchTests);
 
-const deleteUjian = async() => {
-  const konfirmasi = confirm('yakin mau hapus semua??')
+const deleteUjian = async () => {
+  const konfirmasi = confirm("yakin mau hapus semua??");
   if (!konfirmasi) {
-    return 
+    return;
   }
 
   try {
-    await DeleteAllTest()
-    alert('semua ujian/Tedt di apus')
-    await fetchTests()
+    await DeleteAllTest();
+    alert("semua ujian/Tedt di apus");
+    await fetchTests();
   } catch (error) {
-    alert('gagal hapus')
-    console.log(error)
+    alert("gagal hapus");
+    console.log(error);
   }
-}
+};
 
 const handleDeleted = async () => {
   await fetchTests();
 };
-
-
 </script>

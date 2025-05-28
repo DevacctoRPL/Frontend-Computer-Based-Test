@@ -2,7 +2,7 @@
   <div
     class="flex justify-center items-center h-screen text-primary-light bg-gradient-to-b from-tertiary-dark to-primary-dark"
   >
-    <UCard class=" md:w-1/3 bg-primary-dark/15 ring-primary-light/30">
+    <UCard class="md:w-1/3 bg-primary-dark/15 ring-primary-light/30">
       <UForm :state="state" @submit.prevent="Login(state)">
         <div class="mb-5 text-center">
           <img
@@ -11,9 +11,7 @@
             class="w-14 mx-auto"
           />
           <h1 class="text-3xl font-bold text-center">Masuk</h1>
-          <span class=""
-            >Masukan kredensial untuk masuk ke akun anda</span
-          >
+          <span class="">Masukan kredensial untuk masuk ke akun anda</span>
         </div>
         <UFormField required label="Nama Pengguna" size="xl">
           <UInput
@@ -92,7 +90,6 @@ const state = ref({
   password: "",
   c_password: "",
 });
-
 </script>
 
 <style></style>
