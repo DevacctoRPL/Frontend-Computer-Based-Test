@@ -1,20 +1,30 @@
+import type { userData } from "~/types/main.types";
+
 export const useStorage = () => {
-  const setToken = (token: string) => {
-    useCookie("authToken").value = token;
+  let token: any = ref("");
+
+  const setToken = async (tokens: string) => {
+    useCookie("authToken").value = tokens;
   };
 
-  const getToken = () => {
-    return useCookie("authToken").value;
+  const getToken = async () => {
+    token = useCookie("authToken").value;
+    return token;
   };
 
-  const saveUserData = (userData: any) => {
-    useCookie("userData", userData);
+  const setData = async (data: userData) => {
+    useCookie("data").value = JSON.stringify(data);
   };
 
-  const getUserData = () => {
-    const userData = useCookie("userData").value;
-    return userData;
+  const getData = async (): Promise<userData | undefined> => {
+    try {
+      const stored = useCookie("data").value;
+      const parsed = typeof stored === "string" ? JSON.parse(stored) : stored;
+      return parsed as userData;
+    } catch {
+      return undefined;
+    }
   };
 
-  return { setToken, getToken, saveUserData, getUserData };
+  return { setToken, getToken, setData, getData };
 };

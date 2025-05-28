@@ -19,6 +19,32 @@ export interface Soal {
   tes_id: string;
   jenis_soal: string;
   pertanyaan: string;
-  file_gambar: string;
+  file_gambar: File | null;
   poin: number;
+}
+
+export interface loginResponse {
+  message: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    nama_lengkap: string;
+    role: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+  };
+  token: string;
+}
+
+export type userData = {
+  id: number
+  username: string;
+  email: string;
+  nama_lengkap: string;
+  role: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
 }

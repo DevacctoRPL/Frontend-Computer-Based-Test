@@ -1,34 +1,38 @@
+import type { loginResponse } from "~/types/main.types";
+
 export const useAuth = () => {
-const BASE_URL = useRuntimeConfig().public.apiBase // gak tau env nya gak bisa di pake jadi gua gini dlu, kalo bisa di ganti pake env
-const { setToken, saveUserData } = useStorage()
+  const BASE_URL = useRuntimeConfig().public.apiBase; // gak tau env nya gak bisa di pake jadi gua gini dlu, kalo bisa di ganti pake env
+  const { setToken, setData } = useStorage();
 
   const Login = async (data: any) => {
     try {
-      const res = await $fetch(`${BASE_URL}/api/auth/login`, {
-        method: 'POST',
-        body: data
-      }) as any
+      const res: loginResponse = (await $fetch(`${BASE_URL}/api/auth/login`, {
+        method: "POST",
+        body: data,
+      })) as any;
 
-      console.log(res)
-      setToken(res?.token)
-      saveUserData(res?.user)
+      setData(res.user);
+      setToken(res.token);
 
-      navigateTo({ path: '/' })
-    }
-    catch (error) {
+      if (res.user.role == "admin" || res.user.role == "guru") {
+        navigateTo("/admin");
+      } else {
+        navigateTo("/");
+      }
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
   const Logout = () => {
     try {
-      setToken('')
-      saveUserData(null)
-    }
-    catch (error) {
+      setToken("");
+      useCookie("data").value = null;
+      return navigateTo("/login");
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
-  return { Login, Logout }
-}
+  return { Login, Logout };
+};

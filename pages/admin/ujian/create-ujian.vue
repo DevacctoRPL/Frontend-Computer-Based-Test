@@ -181,25 +181,24 @@
         </div>
 
         <!-- Kelas-->
-         <div>
+        <div>
           <label class="block mb-1">Kelas</label>
           <div class="grid grid-cols-2 gap-2">
-        <div
-          v-for="kelas in DaftarKelas"
-          :key="kelas"
-          class="flex items-center"
-        >
-          <input
-            type="checkbox"
-            :value="kelas"
-            v-model="formData.kelas"
-            class="mr-2 accent-answered"
-          />
-          <label>{{ kelas }}</label>
+            <div
+              v-for="kelas in DaftarKelas"
+              :key="kelas"
+              class="flex items-center"
+            >
+              <input
+                type="checkbox"
+                :value="kelas"
+                v-model="formData.kelas"
+                class="mr-2 accent-answered"
+              />
+              <label>{{ kelas }}</label>
+            </div>
+          </div>
         </div>
-        </div>
-         </div>
-            
 
         <!-- Tombol bol tombol -->
         <div class="pt-4">
@@ -265,17 +264,16 @@ const formData = ref({
   password_tes: "",
   mapel: "",
   jenis_ujian: "",
-  semester: "",
+  semester: 0,
   kelas: [],
-  jam_mulai: "",})
+  jam_mulai: "",
+});
 
-  
 const handleSubmit = async () => {
   try {
     const response = await CreateTest({
-      ... formData.value,
-      semester: formData.value.semester.toString()
-    })
+      ...formData.value,
+    });
     console.log("berhasil", response);
     navigateTo("/admin/ujian");
   } catch (error) {

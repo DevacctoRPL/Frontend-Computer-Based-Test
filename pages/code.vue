@@ -72,7 +72,7 @@
 
 <script lang="ts" setup>
 definePageMeta({
-  middleware: ["auth"],
+  middleware: "auth",
 });
 
 // Nanti bakal di ganti sesuai ama api, sementara aja ini - Adit
