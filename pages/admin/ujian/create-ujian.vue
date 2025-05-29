@@ -1,63 +1,53 @@
 <template>
   <div class="h-full text-white flex items-center justify-center px-4">
     <div
-      class="w-full max-w-3xl ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30 rounded-lg p-6"
+      class="w-full max-w-3xl ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50 rounded-lg p-6"
     >
       <h2 class="text-3xl font-bold text-center mb-6">Detail Ujian</h2>
 
       <form class="space-y-4" @submit.prevent="handleSubmit">
-        <!-- Judul ujiannya -->
         <div>
           <label class="block mb-1">Judul</label>
           <UInput
             v-model="formData.judul"
             :ui="{
-              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             type="text"
             class="w-full"
             size="xl"
-            placeholder="Masukkan judul ujian"
           />
         </div>
 
-        <!-- Deskripsi nya-->
         <div>
           <label class="block mb-1">Deskripsi</label>
           <UTextarea
             v-model="formData.deskripsi"
             :rows="3"
             :ui="{
-              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             class="w-full"
-            placeholder="Masukkan deskripsi..."
+            size="xl"
           ></UTextarea>
         </div>
 
-        <!-- Durasi Menit -->
         <div>
           <label class="block mb-1">Durasi (menit)</label>
-          <UInputNumber
+          <UInput
             v-model="formData.durasi_menit"
             :ui="{
-              base: 'w-full p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light ',
+              base: 'w-full text-center p-2 rounded-md ring ring-primary-light/50 bg-primary-dark focus-visible:ring-primary-light ',
             }"
-            :min="1"
-            :max="120"
-            color="primary"
-            :increment="{
-              color: 'neutral',
-            }"
-            :decrement="{
-              color: 'neutral',
-            }"
+            min="1"
+            max="120"
+            type="number"
+            size="xl"
             placeholder="Misal: 90"
             class="w-full"
           />
         </div>
 
-        <!-- Tanggal Mulai & Tanggal Selesai harusnyaa -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block mb-1">Tanggal Mulai</label>
@@ -85,13 +75,12 @@
           </div>
         </div>
 
-        <!-- Jam mulai -->
         <div>
           <label class="block mb-1">Jam Mulai</label>
           <UInput
             v-model="formData.jam_mulai"
             :ui="{
-              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             type="time"
             size="xl"
@@ -101,29 +90,24 @@
 
         <div>
           <label class="block mb-1">Batas Percobaan</label>
-          <UInputNumber
+          <UInput
             v-model="formData.batas_percobaan"
             :ui="{
-              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
-            }"
-            :increment="{
-              color: 'neutral',
-            }"
-            :decrement="{
-              color: 'neutral',
+              base: 'w-full text-center bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             size="xl"
+            type="number"
+            min="1"
             class="w-full"
           />
         </div>
 
-        <!-- password tes atau uian -->
         <div>
           <label class="block mb-1">Password Tes</label>
           <UInput
             v-model="formData.password_tes"
             :ui="{
-              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             type="text"
             size="xl"
@@ -131,14 +115,13 @@
           />
         </div>
 
-        <!-- MapelUjian -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block mb-1">Mapel</label>
             <UInput
               v-model="formData.mapel"
               :ui="{
-                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50',
               }"
               type="text"
               size="xl"
@@ -151,6 +134,9 @@
               v-model="formData.jenis_ujian"
               :ui="{
                 base: 'bg-primary-dark ring-primary-light/50 w-full p-2',
+                placeholder: 'text-primary-light/50',
+                content: 'bg-tertiary-dark ring-0',
+                item: 'text-primary-light bg-tertiary-dark hover:bg-primary-dark rounded-md',
               }"
               variant="outline"
               size="xl"
@@ -160,54 +146,64 @@
           </div>
         </div>
 
-        <!-- Semester berapa gitu -->
         <div>
           <label class="block mb-1">Semester</label>
           <UInput
             v-model="formData.semester"
             :ui="{
-              base: 'w-full p-2 bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/30',
+              base: 'w-full p-2 text-center bg-primary-dark rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light placeholder:text-primary-light/50',
             }"
             class="w-full"
-            :increment="{
-              color: 'neutral',
-            }"
-            :decrement="{
-              color: 'neutral',
-            }"
-            :min="1"
+            type="number"
+            min="1"
             size="xl"
           />
         </div>
 
-        <!-- Kelas-->
         <div>
           <label class="block mb-1">Kelas</label>
-          <div class="grid grid-cols-2 gap-2">
-            <div
-              v-for="kelas in DaftarKelas"
-              :key="kelas"
-              class="flex items-center"
-            >
-              <input
-                type="checkbox"
-                :value="kelas"
-                v-model="formData.kelas"
-                class="mr-2 accent-answered"
-              />
-              <label>{{ kelas }}</label>
-            </div>
+          <div
+            v-for="(kelas, index) in formData.kelas"
+            :key="index"
+            class="flex items-center mb-2"
+          >
+            <UInput
+              v-model="formData.kelas[index]"
+              :ui="{
+                base: 'w-full bg-primary-dark p-2 rounded-md ring ring-primary-light/50 focus-visible:ring-primary-light',
+              }"
+              type="text"
+              size="xl"
+              placeholder="Misal: X-RPL-1"
+              class="flex-grow mr-2"
+            />
+            <UButton
+              icon="i-heroicons-minus-circle"
+              color="error"
+              variant="solid"
+              @click="removeKelas(index)"
+            />
           </div>
+          <UButton
+            icon="i-heroicons-plus-circle"
+            color="primary"
+            variant="solid"
+            @click="addKelas"
+          >
+            Tambah Kelas
+          </UButton>
         </div>
 
-        <!-- Tombol bol tombol -->
         <div class="pt-4">
-          <button
+          <UButton
+            :ui="{
+              base: 'w-full bg-primary-dark hover:bg-tertiary-dark hover:ring-primary-light cursor-pointer ring ring-primary-light/50 py-2 rounded-md text-primary-light flex justify-center',
+            }"
             type="submit"
-            class="w-full hover:ring-primary-light cursor-pointer ring ring-primary-light/50 py-2 rounded-md text-white"
+            size="xl"
           >
             Buat Ujian
-          </button>
+          </UButton>
         </div>
       </form>
     </div>
@@ -265,9 +261,17 @@ const formData = ref({
   mapel: "",
   jenis_ujian: "",
   semester: 0,
-  kelas: [],
+  kelas: [] as string[],
   jam_mulai: "",
 });
+
+const addKelas = () => {
+  formData.value.kelas.push("");
+};
+
+const removeKelas = (index: number) => {
+  formData.value.kelas.splice(index, 1);
+};
 
 const handleSubmit = async () => {
   try {

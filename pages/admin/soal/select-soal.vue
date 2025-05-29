@@ -1,52 +1,60 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center text-white">
-    <div
-      class="w-full h-80 max-w-md mb-4 p-6 border border-white/20 rounded-xl shadow-md"
+  <div class="h-full flex items-center justify-center text-primary-light">
+    <UCard
+      class="w-full ring-primary-light/30 bg-tertiary-dark/30 max-w-md text-primary-light/20 rounded-xl shadow-md"
     >
       <UButton
-        class="text-sm hover:text-white text-white"
+        class="text-sm cursor-pointer hover:text-primary-light text-primary-light/90"
         variant="link"
         icon="i-heroicons-arrow-left"
         @click="$router.back()"
       >
         Kembali
       </UButton>
+      <h1 class="text-3xl font-bold text-center text-primary-light">
+        Detail Soal
+      </h1>
+      <div class="mb-4">
+        <label class="block mb-1 text-primary-light">Pilih Tes</label>
+        <USelect
+          v-model="selectedTesId"
+          :ui="{
+            base: 'bg-primary-dark ring-primary-light/50 w-full p-2',
+            placeholder: 'text-primary-light/50',
+            content: 'bg-tertiary-dark ring-primary-light/30',
+            item: 'text-primary-light bg-tertiary-dark hover:bg-primary-dark rounded-md',
+          }"
+          variant="outline"
+          size="xl"
+          :items="
+            ujianList.map((test) => ({
+              label: test.judul,
+              value: test.tes_id,
+            }))
+          "
+          class="mb-6"
+          placeholder="Pilih ujian"
+        />
+      </div>
 
-      <h1 class="text-2xl font-bold text-center mb-6">Detail Soal</h1>
-
-      <form @submit.prevent="submitForm">
-        <div class="mb-4">
-          <label class="block mb-1 text-white">Pilih Tes</label>
-          <select
-            v-model="selectedTesId"
-            class="w-full px-4 py-2 border border-white/30 rounded-md bg-black text-white"
-          >
-            <option disabled value="">-- Pilih Tes --</option>
-            <option
-              v-for="test in ujianList"
-              :key="test.tes_id"
-              :value="test.tes_id"
-            >
-              {{ test.judul }}
-            </option>
-          </select>
-        </div>
-
-        <button
-          type="submit"
-          class="w-full py-2 border border-white text-white rounded-md hover:bg-white hover:text-black transition"
-        >
-          Mulai Buat Soal
-        </button>
-      </form>
-    </div>
+      <UButton
+        @click="submitForm"
+        :ui="{
+          base: 'w-full bg-tertiary-dark/60 hover:bg-tertiary-dark transition-all hover:ring-primary-light/30 cursor-pointer ring ring-primary-light/40 py-2 rounded-md text-primary-light flex justify-center',
+        }"
+        type="submit"
+        size="xl"
+      >
+        Lihat Soal
+      </UButton>
+    </UCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Test } from "~/types/main.types";
 
-const { GetTest } = useTest()
+const { GetTest } = useTest();
 const ujianList = ref<Test[]>([]);
 const selectedTesId = ref("");
 const router = useRouter();
@@ -68,7 +76,7 @@ onMounted(async () => {
 
 const submitForm = () => {
   if (selectedTesId.value) {
-    router.push(`soal/tambah/${selectedTesId.value}/1`);
+    navigateTo(`/admin/soal/${selectedTesId.value}`);
   }
 };
 </script>

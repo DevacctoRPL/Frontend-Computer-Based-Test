@@ -16,14 +16,10 @@ export const useStorage = () => {
     useCookie("data").value = JSON.stringify(data);
   };
 
-  const getData = async (): Promise<userData | undefined> => {
-    try {
-      const stored = useCookie("data").value;
-      const parsed = typeof stored === "string" ? JSON.parse(stored) : stored;
-      return parsed as userData;
-    } catch {
-      return undefined;
-    }
+  const getData = async (): Promise<userData> => {
+    const stored = useCookie("data").value;
+    const parsed = typeof stored === "string" ? JSON.parse(stored) : stored;
+    return parsed as userData;
   };
 
   return { setToken, getToken, setData, getData };

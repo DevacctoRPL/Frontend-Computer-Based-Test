@@ -18,7 +18,7 @@
           <div class="flex flex-col gap-4 items-center justify-center border-b border-primary-light pb-5">
             <div class="w-24 h-24 rounded-full bg-primary-light"></div>
             <div class="flex flex-col items-center justify-center">
-              <span class="text-xl text-primary-light">Aditya</span>
+              <span class="text-xl text-primary-light">{{ user.username }}</span>
               <span class="text-md text-primary-light opacity-40">XI RPL 2</span>
             </div>
           </div>
@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts" setup>
-const { getUserData } = useStorage()
-const user = getUserData()
+const { getData } = useStorage()
+const user = await getData()
 </script>
 
 <style></style>
