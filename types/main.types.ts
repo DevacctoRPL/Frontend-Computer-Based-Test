@@ -38,8 +38,21 @@ export interface loginResponse {
   token: string;
 }
 
+export interface JawabanData {
+  teks_pilihan: string;
+  is_benar: boolean;
+  file_gambar?: File | null;
+}
+
+export interface JawabanResponseData {
+  id: string;
+  teks_pilihan: string;
+  is_benar: boolean;
+  file_gambar?: string | null;
+}
+
 export type userData = {
-  id: number
+  id: number;
   username: string;
   email: string;
   nama_lengkap: string;
@@ -47,4 +60,4 @@ export type userData = {
   status: string;
   created_at: string;
   updated_at: string;
-}
+};

@@ -21,6 +21,7 @@
         :ujian="{
           id: ujian.tes_id,
           judul: ujian.judul,
+          deskripsi: ujian.deskripsi,
           mapel: ujian.mapel,
           jenis_ujian: ujian.jenis_ujian,
           durasi_menit: ujian.durasi_menit,
