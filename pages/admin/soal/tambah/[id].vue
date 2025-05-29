@@ -1,10 +1,10 @@
 <template>
-  <div class=" text-primary-light">
+  <div class="text-primary-light">
     <div class="flex">
       <div class="flex-1 p-6">
         <div class="mb-6">
           <h1 class="text-2xl font-bold text-primary-light">
-            Soal Nomor: {{ soalNo }}
+            Soal Nomor
           </h1>
         </div>
 
@@ -99,7 +99,9 @@
             </UButton>
 
             <div class="mt-4">
-              <label class="block text-sm font-medium mb-2">Jawaban Benar:</label>
+              <label class="block text-sm font-medium mb-2"
+                >Jawaban Benar:</label
+              >
               <USelect
                 v-model="formData.jawaban_benar"
                 :ui="{
@@ -151,15 +153,21 @@
             }}</span>
           </div>
           <div>
-            <label class="block text-sm font-medium mb-2">Mata Pelajaran:</label>
+            <label class="block text-sm font-medium mb-2"
+              >Mata Pelajaran:</label
+            >
             <span class="text-gray-400">{{
               tesDetail?.mapel || "Loading..."
             }}</span>
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-2">Waktu Pengerjaan:</label>
-            <span class="text-gray-400">{{ tesDetail?.durasi_menit || "-" }} Menit</span>
+            <label class="block text-sm font-medium mb-2"
+              >Waktu Pengerjaan:</label
+            >
+            <span class="text-gray-400"
+              >{{ tesDetail?.durasi_menit || "-" }} Menit</span
+            >
           </div>
 
           <div>
@@ -216,14 +224,13 @@ interface FormData {
   jawaban_benar: string;
 }
 
-const { CreateSoal } = useSoal();
+const { createQuestion } = useSoal();
 const { createMultipleAnswers } = useAnswer();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 
-const tesId = route.params.tes_id as string;
-const soalNo = Number(route.params.id);
+const tesId = route.params.id as string;
 
 const isSubmitting = ref(false);
 const fileInput = ref<HTMLInputElement>();
@@ -356,7 +363,7 @@ const submitSoal = async () => {
       title: "Form tidak lengkap",
       description: "Mohon lengkapi semua field yang diperlukan",
       color: "error",
-      icon: 'i-heroicons-exclamation-triangle',
+      icon: "i-heroicons-exclamation-triangle",
     });
     return;
   }
@@ -373,7 +380,7 @@ const submitSoal = async () => {
       soalData.append("file_gambar", formData.value.file_gambar);
     }
 
-    const soalResponse = await CreateSoal(tesId, soalData);
+    const soalResponse = await createQuestion(tesId, soalData);
     const soalId = soalResponse.data.soal_id;
 
     if (formData.value.jenis_soal === "pilihan_ganda") {
@@ -385,13 +392,15 @@ const submitSoal = async () => {
       );
 
       await createMultipleAnswers(soalId, jawabansData);
-      }
+    }
     toast.add({
       title: "Berhasil!",
       description: "Soal dan jawaban berhasil disimpan",
       color: "primary",
-      icon: 'i-heroicons-check-circle',
+      icon: "i-heroicons-check-circle",
     });
+
+    router.push(`/admin/soal/${tesId}`);
   } catch (error: any) {
     console.error("Gagal menyimpan soal:", error);
 
@@ -399,7 +408,7 @@ const submitSoal = async () => {
       title: "Gagal menyimpan soal",
       description: error?.message || "Terjadi kesalahan tidak terduga",
       color: "error",
-      icon: 'i-heroicons-x-circle',
+      icon: "i-heroicons-x-circle",
     });
   } finally {
     isSubmitting.value = false;
@@ -439,7 +448,7 @@ onMounted(() => {
   fetchTesDetail();
 });
 
-if (!tesId || !soalNo) {
+if (!tesId) {
   throw createError({
     statusCode: 404,
     statusMessage: "Parameter tidak valid",

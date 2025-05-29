@@ -1,35 +1,42 @@
 <template>
   <UCard
-    class="bg-primary-dark ring-primary-light/50 rounded-lg shadow-md overflow-hidden h-auto min-w-60 max-w-60"
+    :ui="{
+      header: 'text-primary-light font-semibold border-primary-light/30 p-2',
+    }"
+    class="ring-primary-light/30 bg-tertiary-dark/60 rounded-lg shadow-md overflow-hidden h-full min-w-60 max-w-60"
   >
-    <div class="flex justify-center items-center gap-2 pb-2 mb-2 border-b border-tertiary-dark">
-      <NuxtLink :href="`/admin/ujian/update/${ujian.id}`">
+    <template #header>
+      <div class="flex gap-2">
         <UButton
+          color="neutral"
+          variant="ghost"
           icon="i-heroicons-pencil-square"
-          color="primary"
-          variant="solid"
-          size="sm"
-          label="Edit"
-          class="cursor-pointer"
+          :to="`/admin/ujian/update/${ujian.id}`"
         />
-      </NuxtLink>
-      <UButton
-        icon="i-heroicons-trash"
-        color="error"
-        variant="solid"
-        size="sm"
-        label="Delete"
-        class="hover:bg-red-600 cursor-pointer"
-        @click="handleDelete"
-      />
-    </div>
+        <UButton
+          color="error"
+          variant="ghost"
+          icon="i-heroicons-trash"
+          class="cursor-pointer"
+          @click="handleDelete"
+        />
+      </div>
+    </template>
+
     <div class="flex flex-col h-full">
       <div class="flex flex-col flex-grow">
         <h3 class="text-xl font-bold text-white mb-2">{{ ujian.judul }}</h3>
-        <p class="text-sm text-gray-400 mb-4">{{ ujian.mapel }}</p>
         <p class="text-sm text-gray-300 mb-4">{{ ujian.deskripsi }}</p>
 
         <div class="space-y-2">
+          <div class="flex items-center text-white">
+            <UIcon name="i-heroicons-book-open" class="mr-2 text-primary-light" />
+            <span class="font-semibold">Mata Pelajaran:</span>
+            <span class="ml-2 text-primary-light opacity-70">{{
+              ujian.mapel
+            }}</span>
+          </div>
+
           <div class="flex items-center text-white">
             <UIcon name="i-heroicons-tag" class="mr-2 text-primary-light" />
             <span class="font-semibold">Jenis Ujian:</span>
@@ -68,15 +75,13 @@ const props = defineProps<{
 }>();
 
 const handleDelete = async () => {
-  if (
-    confirm(`Yakin ingin menghapus ujian ini? "${props.ujian.judul}"?`)
-  ) {
+  if (confirm(`Yakin ingin menghapus ujian ini? "${props.ujian.judul}"?`)) {
     try {
       await DeleteTest(props.ujian.id);
       emit("deleted", props.ujian.id);
     } catch (error) {
       console.error("Gagal menghapus ujian:", error);
-      alert("Gagal menghapus ujian. Silahkan coba lagi."); 
+      alert("Gagal menghapus ujian. Silahkan coba lagi.");
     }
   }
 };

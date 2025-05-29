@@ -4,7 +4,22 @@ export const useSoal = () => {
   const BASE_URL = useRuntimeConfig().public.apiBase;
   const { getToken } = useStorage();
 
-  const CreateSoal = async (tes_id: string, formData: FormData) => {
+  const getAllQuestions = async (tes_id: string) => {
+    const token = await getToken();
+    const response = await $fetch<{ data: Soal[] }>(
+      `${BASE_URL}/api/guru/soal/show/${tes_id}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  const createQuestion = async (tes_id: string, formData: FormData) => {
     const token = await getToken();
     const response = await $fetch<{ data: Soal }>(
       `${BASE_URL}/api/guru/soal/create/${tes_id}`,
@@ -21,22 +36,32 @@ export const useSoal = () => {
     return response;
   };
 
-  const SetJawaban = async (soal_id: string, jawaban: any) => {
-    const token = getToken();
-    const response = await $fetch(
-      `${BASE_URL}/api/guru/jawaban/create/${soal_id}`,
+  const updateSoal = async (soal_id: string, formData: FormData) => {
+    const token = await getToken();
+    const response = await $fetch<{ data: Soal }>(
+      `${BASE_URL}/api/guru/soal/update/${soal_id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: jawaban,
+        body: formData,
       }
     );
     return response;
   };
 
-  return { CreateSoal, SetJawaban };
+  const deleteSoal = async (soal_id: string) => {
+    const token = await getToken();
+    return await $fetch(`${BASE_URL}/api/guru/soal/delete/${soal_id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  return { getAllQuestions, createQuestion, updateSoal, deleteSoal };
 };

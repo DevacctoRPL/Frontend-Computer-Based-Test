@@ -39,16 +39,10 @@ export interface loginResponse {
 }
 
 export interface JawabanData {
+  jawaban_id?: string;
+  soal_id?: string;
   teks_pilihan: string;
   is_benar: boolean;
-  file_gambar?: File | null;
-}
-
-export interface JawabanResponseData {
-  id: string;
-  teks_pilihan: string;
-  is_benar: boolean;
-  file_gambar?: string | null;
 }
 
 export type userData = {

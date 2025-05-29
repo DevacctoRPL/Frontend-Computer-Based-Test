@@ -1,7 +1,6 @@
 <template>
   <div class="p-6 min-h-screen text-white">
     <div class="flex flex-col lg:flex-row gap-6">
-      <!-- Bagian Kiri: Form Soal -->
       <div class="flex-1 space-y-6 border border-primary-dark p-6 rounded-lg">
         <div class="text-2xl font-bold">Soal Nomor: {{ soalNo }}</div>
 

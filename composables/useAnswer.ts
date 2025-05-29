@@ -1,126 +1,33 @@
 import { ref, readonly } from "vue";
-import type { JawabanData, JawabanResponseData } from "~/types/main.types";
+import type { JawabanData } from "~/types/main.types";
 
 export const useAnswer = () => {
-  const Answers = ref<JawabanResponseData[]>([]);
+  const Answers = ref<JawabanData[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  interface ApiResponse<T> {
-    data: T;
-  }
-
-  const createAnswer = async (
-    soalId: string,
-    jawabanData: JawabanData | FormData
-  ) => {
-    const BASE_URL = useRuntimeConfig().public.apiBase;
-
-    loading.value = true;
-    error.value = null;
-    const token = await useStorage().getToken();
-
-    try {
-      let body: any;
-      let headers: HeadersInit = {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
-      if (jawabanData instanceof FormData) {
-        body = jawabanData;
-      } else {
-        body = JSON.stringify(jawabanData);
-        headers["Content-Type"] = "application/json";
-      }
-
-      const response = await $fetch<ApiResponse<JawabanResponseData>>(
-        `${BASE_URL}/api/guru/jawaban/create/${soalId}`,
-        {
-          method: "POST",
-          body: body,
-          headers: headers,
-        }
-      );
-
-      await getAllAnswers(soalId);
-
-      return response;
-    } catch (err: any) {
-      error.value = err.message || "Gagal membuat jawaban";
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-
   const getAllAnswers = async (soalId: string) => {
     const BASE_URL = useRuntimeConfig().public.apiBase;
+    const token = await useStorage().getToken();
 
     loading.value = true;
     error.value = null;
 
     try {
-      const response = await $fetch<ApiResponse<JawabanResponseData[]>>(
+      const response = await $fetch<{ data: JawabanData[]}>(
         `${BASE_URL}/api/guru/jawaban/show/${soalId}`,
         {
           method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      Answers.value = response.data || [];
-      return response;
+      return response.data;
     } catch (err: any) {
       error.value = err.message || "Gagal mengambil jawaban";
       Answers.value = [];
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const updateAnswer = async (
-    jawabanId: string,
-    jawabanData: JawabanData | FormData
-  ) => {
-    const BASE_URL = useRuntimeConfig().public.apiBase;
-
-    loading.value = true;
-    error.value = null;
-    const token = await useStorage().getToken();
-
-    try {
-      let body: any;
-      let headers: HeadersInit = {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-
-      if (jawabanData instanceof FormData) {
-        body = jawabanData;
-        body.append("_method", "PUT");
-      } else {
-        body = JSON.stringify(jawabanData);
-        headers["Content-Type"] = "application/json";
-      }
-
-      const response = await $fetch<ApiResponse<JawabanResponseData>>(
-        `${BASE_URL}/api/guru/jawaban/update/${jawabanId}`,
-        {
-          method: "PUT",
-          body,
-          headers,
-        }
-      );
-
-      const index = Answers.value.findIndex((j) => j.id === jawabanId);
-      if (index !== -1) {
-        Answers.value[index] = { ...Answers.value[index], ...response.data };
-      }
-
-      return response;
-    } catch (err: any) {
-      error.value = err.message || "Gagal update jawaban";
       throw err;
     } finally {
       loading.value = false;
@@ -135,7 +42,7 @@ export const useAnswer = () => {
     const token = await useStorage().getToken();
 
     try {
-      const response = await $fetch<ApiResponse<any>>(
+      const response = await $fetch(
         `${BASE_URL}/api/guru/jawaban/delete/${jawabanId}`,
         {
           method: "DELETE",
@@ -146,7 +53,7 @@ export const useAnswer = () => {
         }
       );
 
-      Answers.value = Answers.value.filter((j) => j.id !== jawabanId);
+      Answers.value = Answers.value.filter((j) => j.jawaban_id !== jawabanId);
 
       return response;
     } catch (err: any) {
@@ -192,21 +99,35 @@ export const useAnswer = () => {
     }
   };
 
-  const updateMultipleAnswers = async (
-    AnswersUpdates: Array<{ id: string; data: JawabanData }>
+    const updateMultipleAnswers = async (
+    soalId: string,
+    AnswersData: JawabanData[]
   ) => {
+    const BASE_URL = useRuntimeConfig().public.apiBase;
+
     loading.value = true;
     error.value = null;
+    const token = await useStorage().getToken();
 
     try {
-      const promises = AnswersUpdates.map((update) =>
-        updateAnswer(update.id, update.data)
+      const body = { jawaban: AnswersData };
+
+      const response = await $fetch(
+        `${BASE_URL}/api/guru/jawaban/update/${soalId}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      const responses = await Promise.all(promises);
-      return responses;
+      return response;
     } catch (err: any) {
-      error.value = err.message || "Gagal update pilihan ganda";
+      error.value = err.message || "Gagal memperbarui pilihan ganda";
       throw err;
     } finally {
       loading.value = false;
@@ -221,7 +142,7 @@ export const useAnswer = () => {
       const promises = jawabanIds.map((id) => deleteAnswer(id));
       const responses = await Promise.all(promises);
 
-      Answers.value = Answers.value.filter((j) => !jawabanIds.includes(j.id));
+      Answers.value = Answers.value.filter((j) => !jawabanIds.includes(j.jawaban_id || ""));
 
       return responses;
     } catch (err: any) {
@@ -237,9 +158,7 @@ export const useAnswer = () => {
     loading: readonly(loading),
     error: readonly(error),
 
-    createAnswer,
     getAllAnswers,
-    updateAnswer,
     deleteAnswer,
     createMultipleAnswers,
     updateMultipleAnswers,
