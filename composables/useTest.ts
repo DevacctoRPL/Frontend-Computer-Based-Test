@@ -6,7 +6,7 @@ export const useTest = () => {
 
   const GetTest = async () => {
     const token = await getToken();
-    
+
     const response = await $fetch<{ data: Test[] }>(
       `${BASE_URL}/api/guru/tes/show`,
       {
@@ -99,6 +99,41 @@ export const useTest = () => {
     });
   };
 
+  const GetTestSiswa = async () => {
+    const token = await getToken();
+
+    const response = await $fetch<{ data: Test[] }>(
+      `${BASE_URL}/api/siswa/tes`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  const GetSiswaTestById = async (tes_id: string) => {
+    const token = await getToken();
+
+    const response = await $fetch<{ data: Test }>(
+      `${BASE_URL}/api/siswa/tes/${tes_id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  };
+
   return {
     GetTest,
     CreateTest,
@@ -106,5 +141,7 @@ export const useTest = () => {
     EditTest,
     DeleteTest,
     DeleteAllTest,
+    GetTestSiswa,
+    GetSiswaTestById,
   };
 };

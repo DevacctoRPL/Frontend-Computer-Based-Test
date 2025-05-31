@@ -13,30 +13,47 @@
           <h1 class="text-3xl font-bold text-center">Kode Tes</h1>
           <span class="">Masukan kode tes untuk masuk ujian</span>
         </div>
-        <UFormField required label="Kode Tes" size="xl" class="mb-3">
-          <UInput
-            required
+
+        <div class="mb-3">
+          <label class="block mb-1 text-white">Pilih Tes</label>
+          <select
+            v-model="selectedTesId"
+            class="w-full px-4 py-2 border border-white/30 rounded-md bg-black text-white"
+          >
+            <option disabled value="">-- Pilih Tes --</option>
+            <option
+              v-for="test in ujianList"
+              :key="test.tes_id"
+              :value="test.tes_id"
+            >
+              {{ test.judul }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="block mb-1 text-white">Kode Tes</label>
+          <input
             v-model="state.code"
-            placeholder="Masukan Kode"
             type="text"
-            :ui="{
-              base: 'transition-all w-full mb-3 p-2.5 bg-secondary-dark/35 focus:ring-primary-light focus-visible:ring-primary-light/70 ring-primary-light/50 placeholder:text-primary-light/40',
-            }"
-            class="w-full"
+            placeholder="Masukkan kode tes"
+            class="w-full px-4 py-2 border border-white/30 rounded-md bg-black text-white"
           />
-        </UFormField>
+        </div>
+
         <UButton
           variant="outline"
           type="submit"
+          @click="SubmitKode"
           class="w-full p-2 text-xl font-bold flex justify-center cursor-pointer text-primary-light ring-primary-light/70 hover:bg-primary-light/10"
         >
           Cek Kode
         </UButton>
       </UForm>
     </UCard>
-    <div v-if="FETCHED" class="h-2/3 w-[1px] bg-primary-light/30" />
+    <div v-if="detailUjian" class="h-2/3 w-[1px] bg-primary-light/30" />
     <UCard
-      v-if="FETCHED"
+      v-if="detailUjian"
       class="md:w-1/4 bg-primary-dark/15 ring-primary-light/30"
     >
       <div class="mb-5 text-center">
@@ -45,23 +62,23 @@
       </div>
       <div class="flex flex-col gap-2">
         <p>
-          <span class="text-lg text-primary-light">Guru:</span><br />
+          <span class="text-lg text-primary-light">Jenis Ujian:</span><br />
           <span class="text-sm text-primary-light opacity-40"
-            >Ir. Joko Widodo</span
+            >{{ detailUjian?.jenis_ujian }}</span
           >
         </p>
         <p>
           <span class="text-lg text-primary-light">Mata Pelajaran:</span><br />
-          <span class="text-sm text-primary-light opacity-40">Matematika</span>
+          <span class="text-sm text-primary-light opacity-40">{{ detailUjian?.mapel }}</span>
         </p>
         <p>
-          <span class="text-lg text-primary-light">Jumlah Soal:</span><br />
-          <span class="text-sm text-primary-light opacity-40">7000</span>
+          <span class="text-lg text-primary-light">Semester:</span><br />
+          <span class="text-sm text-primary-light opacity-40">{{ detailUjian?.semester }}</span>
         </p>
       </div>
       <UButton
         variant="outline"
-        @click="navigateTo('/soal')"
+          @click="navigateTo('/soal')"
         class="w-full mt-3.5 p-2 text-xl font-bold flex justify-center cursor-pointer text-primary-light ring-primary-light/70 hover:bg-primary-light/10"
       >
         Masuk
@@ -75,13 +92,54 @@ definePageMeta({
   middleware: "auth",
 });
 
-// Nanti bakal di ganti sesuai ama api, sementara aja ini - Adit
-const FETCHED = ref(true);
+import type { Test } from "~/types/main.types";
+
+const { GetSiswaTestById, GetTestSiswa } = useTest();
+const ujianList = ref<Test[]>([]);
+const selectedTesId = ref("");
 
 const state = ref({
   code: "",
-  validSoal: true,
 });
+
+const detailUjian = ref<Test | null>(null);
+
+// Nanti bakal di ganti sesuai ama api, sementara aja ini - Adit
+// bikelahj -john🦅🦅
+const FETCHED = ref(true);
+
+const fetchUjian = async() => {
+    try {
+    const data = await GetTestSiswa();
+    ujianList.value = data;
+    console.log(data)
+  } catch (err) {
+    console.error("Gagal ambil data tes:", err);
+  }
+}
+
+onMounted(fetchUjian)
+
+const SubmitKode = async () => {
+  if (!selectedTesId.value) {
+    return;
+  }
+
+  try {
+    const detailTest = await GetSiswaTestById(selectedTesId.value);
+
+    if (detailTest.password_tes !== state.value.code) {
+      alert("KODE SALAHHHHHH");
+      return;
+    }
+
+    detailUjian.value = detailTest;
+    alert("YEAYYYYY KAMU BENAR KODENYA");
+  } catch (error) {
+    console.error("GAGAGGAGAL", error);
+    alert("error");
+  }
+};
 </script>
 
 <style></style>
