@@ -16,19 +16,25 @@
 
         <div class="mb-3">
           <label class="block mb-1 text-white">Pilih Tes</label>
-          <select
-            v-model="selectedTesId"
-            class="w-full px-4 py-2 border border-white/30 rounded-md bg-black text-white"
-          >
-            <option disabled value="">-- Pilih Tes --</option>
-            <option
-              v-for="test in ujianList"
-              :key="test.tes_id"
-              :value="test.tes_id"
-            >
-              {{ test.judul }}
-            </option>
-          </select>
+         <USelect
+          v-model="selectedTesId"
+          :ui="{
+            base: 'bg-primary-dark ring-primary-light/50 w-full p-2',
+            placeholder: 'text-primary-light/50',
+            content: 'bg-tertiary-dark ring-primary-light/30',
+            item: 'text-primary-light bg-tertiary-dark hover:bg-primary-dark rounded-md',
+          }"
+          variant="outline"
+          size="xl"
+          :items="
+            ujianList.map((test) => ({
+              label: test.judul,
+              value: test.tes_id,
+            }))
+          "
+          class="mb-6"
+          placeholder="Pilih ujian"
+        />
         </div>
 
         <div class="mb-3">
@@ -78,7 +84,7 @@
       </div>
       <UButton
         variant="outline"
-          @click="navigateTo('/soal')"
+          @click="navigateTo(`/soal/${selectedTesId}/first`)"
         class="w-full mt-3.5 p-2 text-xl font-bold flex justify-center cursor-pointer text-primary-light ring-primary-light/70 hover:bg-primary-light/10"
       >
         Masuk
@@ -93,10 +99,12 @@ definePageMeta({
 });
 
 import type { Test } from "~/types/main.types";
+// import Tes_id from "./admin/soal/[tes_id].vue";
 
-const { GetSiswaTestById, GetTestSiswa } = useTest();
+const { GetSiswaTestById, GetTestSiswa } = useSiswa();
 const ujianList = ref<Test[]>([]);
 const selectedTesId = ref("");
+const toast = useToast();
 
 const state = ref({
   code: "",
@@ -129,12 +137,22 @@ const SubmitKode = async () => {
     const detailTest = await GetSiswaTestById(selectedTesId.value);
 
     if (detailTest.password_tes !== state.value.code) {
-      alert("KODE SALAHHHHHH");
+      // alert("KODE SALAHHHHHH");
+       toast.add({
+        title: "Wrong Code",
+        description: "Failed",
+        color: "error",
+      });
       return;
     }
 
     detailUjian.value = detailTest;
-    alert("YEAYYYYY KAMU BENAR KODENYA");
+    // alert("YEAYYYYY KAMU BENAR KODENYA");
+          toast.add({
+        title: "Code Correct xixixi",
+        description: "Continue to Test",
+        color: "success",
+      });
   } catch (error) {
     console.error("GAGAGGAGAL", error);
     alert("error");

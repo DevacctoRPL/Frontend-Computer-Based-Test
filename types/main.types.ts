@@ -21,6 +21,7 @@ export interface Soal {
   pertanyaan: string;
   file_gambar: File | null;
   poin: number;
+  list_jawaban: string[];
 }
 
 export interface loginResponse {
@@ -55,3 +56,7 @@ export type userData = {
   created_at: string;
   updated_at: string;
 };
+
+export interface SoalResponse {
+  data: Soal[];
+}

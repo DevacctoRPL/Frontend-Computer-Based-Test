@@ -141,7 +141,5 @@ export const useTest = () => {
     EditTest,
     DeleteTest,
     DeleteAllTest,
-    GetTestSiswa,
-    GetSiswaTestById,
   };
 };
